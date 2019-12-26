@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\redis">
+      <UniqueIdentifier>{c29795e9-f07a-408c-923a-c4bff0d714bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stream">
+      <UniqueIdentifier>{f96115bb-f8eb-4f7f-afe7-7a1d0c056efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib">
+      <UniqueIdentifier>{811d0164-c10b-4bd8-96d1-fd53a2eea868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\internal">
+      <UniqueIdentifier>{8af745e2-03d3-4940-a6a7-832e178c04a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include">
+      <UniqueIdentifier>{fe9a1d9b-7fbe-41a9-89d9-4b20c5ce81de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include\acl_cpp">
+      <UniqueIdentifier>{6053c162-8776-4d9e-8e81-0c05344499b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\connpool">
+      <UniqueIdentifier>{dde9345c-aaab-4e85-bc3b-9dbd80459084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ipc">
+      <UniqueIdentifier>{8fde0d6e-7005-4d7b-bb6d-cc151c0cbf9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\mw">
+      <UniqueIdentifier>{e29a0d9d-de85-47cf-a922-e529017da0b2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\redis\redis_request.hpp">
+      <Filter>源文件\redis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\internal\win_iconv.hpp">
+      <Filter>源文件\stdlib\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="include\acl_cpp\acl_cpp_define.hpp">
+      <Filter>头文件\include\acl_cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\connpool\check_timer.hpp">
+      <Filter>源文件\connpool</Filter>
+    </ClInclude>
+    <ClInclude Include="src\acl_stdafx.hpp">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\acl_cpp\aclredislib.h">
+      <Filter>头文件\include\acl_cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stream\aio_timer_delay_free.hpp">
+      <Filter>源文件\stream</Filter>
+    </ClInclude>
+    <ClInclude Include="src\connpool\check_rpc.hpp">
+      <Filter>源文件\connpool</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mw\mwredisimpl.h">
+      <Filter>源文件\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mw\mwredislib.h">
+      <Filter>源文件\mw</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_client.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_client_cluster.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_client_pool.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_cluster.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_command.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_connection.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_geo.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_hash.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_hyperloglog.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_key.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_list.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_master.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_node.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_pubsub.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_request.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_result.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_role.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_script.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_sentinel.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_server.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_set.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_slave.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_slot.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_stream.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_string.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_transaction.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis\redis_zset.cpp">
+      <Filter>源文件\redis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\fstream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\ifstream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\istream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\ofstream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\ostream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\server_socket.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\socket_stream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\stdin_stream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\stdout_stream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\stream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\internal\win_iconv.cpp">
+      <Filter>源文件\stdlib\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\escape.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\locker.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\log.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\malloc.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\mbox.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\md5.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\pipe_stream.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\scan_dir.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\snprintf.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\thread.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\thread_cond.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\thread_mutex.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\thread_pool.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\token_tree.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\url_coder.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\util.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\check_client.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\check_timer.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\connect_manager.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\connect_pool.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\tcp_client.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\tcp_ipc.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\tcp_manager.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\tcp_pool.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\tcp_reader.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\tcp_sender.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\acl_stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\acl_cpp_init.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\connect_monitor.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\dbuf_pool.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_ostream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_socket_stream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_stream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_timer_callback.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_timer_delay_free.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_delay_free.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_fstream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_handle.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_istream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stream\aio_listen_stream.cpp">
+      <Filter>源文件\stream</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ipc\ipc_client.cpp">
+      <Filter>源文件\ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ipc\ipc_server.cpp">
+      <Filter>源文件\ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ipc\ipc_service.cpp">
+      <Filter>源文件\ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ipc\rpc.cpp">
+      <Filter>源文件\ipc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\connpool\check_rpc.cpp">
+      <Filter>源文件\connpool</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\atomic.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\bitmap.cpp">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="include\mw\mwredisimpl.cpp">
+      <Filter>源文件\mw</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

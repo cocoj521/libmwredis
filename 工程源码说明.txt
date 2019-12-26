@@ -1,0 +1,8 @@
+acllib：  基础库
+aclredis：redis接口库
+          aclredis/include/mw/mwredislib.h:库头文件接口         
+          aclredis/include/mw/mwredisimpl.cpp：具体实现
+demo:示例
+
+
+使用方法：mwredislib.h头文件 + 链接acllib、aclredis静态库。

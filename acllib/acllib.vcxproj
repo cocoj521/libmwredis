@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugMD|Win32">
+      <Configuration>DebugMD</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugMD|x64">
+      <Configuration>DebugMD</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseMD|Win32">
+      <Configuration>ReleaseMD</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseMD|x64">
+      <Configuration>ReleaseMD</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{28F7C19B-D952-43FD-AEF5-B798AC9E15FC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>acllib</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMD|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMD|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMD|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMD|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMD|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugMD|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMD|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugMD|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>$(ProjectName)64</TargetName>
+    <OutDir>$(SolutionDir)\lib</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMD|x64'">
+    <TargetName>$(ProjectName)64d</TargetName>
+    <OutDir>$(SolutionDir)\MDlib\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugMD|x64'">
+    <TargetName>$(ProjectName)64d</TargetName>
+    <OutDir>$(SolutionDir)\DebugMDlib\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)\lib\</OutDir>
+    <TargetName>$(ProjectName)64d</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN64;_DEBUG;_LIB;_MT;ACL_PREPARE_COMPILE;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>.;./include</AdditionalIncludeDirectories>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMD|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugMD|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;_MT;ACL_PREPARE_COMPILE;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>.;./include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseMD|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;_MT;ACL_PREPARE_COMPILE;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>.;./include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugMD|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN64;NDEBUG;_LIB;_MT;ACL_PREPARE_COMPILE;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>
+      </SDLCheck>
+      <AdditionalIncludeDirectories>.;./include</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <StringPooling>true</StringPooling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\aio\acl_aio.c" />
+    <ClCompile Include="src\aio\acl_aio_connect.c" />
+    <ClCompile Include="src\aio\acl_aio_listen.c" />
+    <ClCompile Include="src\aio\acl_aio_read.c" />
+    <ClCompile Include="src\aio\acl_aio_stream.c" />
+    <ClCompile Include="src\aio\acl_aio_write.c" />
+    <ClCompile Include="src\aio\aio_callback.c" />
+    <ClCompile Include="src\code\acl_base64.c" />
+    <ClCompile Include="src\code\acl_urlcode.c" />
+    <ClCompile Include="src\code\acl_vstring_base64.c" />
+    <ClCompile Include="src\event\acl_events.c" />
+    <ClCompile Include="src\event\acl_timer.c" />
+    <ClCompile Include="src\event\events.c" />
+    <ClCompile Include="src\event\events_alloc.c" />
+    <ClCompile Include="src\event\events_dog.c" />
+    <ClCompile Include="src\event\events_epoll_thr.c" />
+    <ClCompile Include="src\event\events_fdtable.c" />
+    <ClCompile Include="src\event\events_iocp.c" />
+    <ClCompile Include="src\event\events_kernel.c" />
+    <ClCompile Include="src\event\events_kernel_thr.c" />
+    <ClCompile Include="src\event\events_poll.c" />
+    <ClCompile Include="src\event\events_poll_thr.c" />
+    <ClCompile Include="src\event\events_select.c" />
+    <ClCompile Include="src\event\events_select_thr.c" />
+    <ClCompile Include="src\event\events_timer.c" />
+    <ClCompile Include="src\event\events_timer_thr.c" />
+    <ClCompile Include="src\event\events_wmsg.c" />
+    <ClCompile Include="src\event\fdmap.c" />
+    <ClCompile Include="src\init\acl_init.c" />
+    <ClCompile Include="src\net\acl_access.c" />
+    <ClCompile Include="src\net\acl_host_port.c" />
+    <ClCompile Include="src\net\acl_ifconf.c" />
+    <ClCompile Include="src\net\acl_mask_addr.c" />
+    <ClCompile Include="src\net\acl_sane_inet.c" />
+    <ClCompile Include="src\net\acl_sane_socket.c" />
+    <ClCompile Include="src\net\acl_tcp_ctl.c" />
+    <ClCompile Include="src\net\acl_valid_hostname.c" />
+    <ClCompile Include="src\net\acl_vstream_net.c" />
+    <ClCompile Include="src\net\connect\acl_inet_connect.c" />
+    <ClCompile Include="src\net\connect\acl_sane_connect.c" />
+    <ClCompile Include="src\net\connect\acl_stream_connect.c" />
+    <ClCompile Include="src\net\connect\acl_timed_connect.c" />
+    <ClCompile Include="src\net\connect\acl_unix_connect.c" />
+    <ClCompile Include="src\net\dns\acl_dns.c" />
+    <ClCompile Include="src\net\dns\acl_netdb.c" />
+    <ClCompile Include="src\net\dns\acl_netdb_cache.c" />
+    <ClCompile Include="src\net\dns\acl_res.c" />
+    <ClCompile Include="src\net\dns\res_util.c" />
+    <ClCompile Include="src\net\dns\rfc1035.c" />
+    <ClCompile Include="src\net\listen\acl_fifo_listen.c" />
+    <ClCompile Include="src\net\listen\acl_inet_listen.c" />
+    <ClCompile Include="src\net\listen\acl_sane_accept.c" />
+    <ClCompile Include="src\net\listen\acl_sane_bind.c" />
+    <ClCompile Include="src\net\listen\acl_unix_listen.c" />
+    <ClCompile Include="src\private\private_array.c" />
+    <ClCompile Include="src\private\private_fifo.c" />
+    <ClCompile Include="src\private\private_vstream.c" />
+    <ClCompile Include="src\private\sem.c" />
+    <ClCompile Include="src\private\thread_mutex.c" />
+    <ClCompile Include="src\stdlib\acl_atomic.c" />
+    <ClCompile Include="src\stdlib\acl_chunk_chain.c" />
+    <ClCompile Include="src\stdlib\acl_debug.c" />
+    <ClCompile Include="src\stdlib\acl_file.c" />
+    <ClCompile Include="src\stdlib\acl_getopt.c" />
+    <ClCompile Include="src\stdlib\acl_mbox.c" />
+    <ClCompile Include="src\stdlib\acl_meter_time.c" />
+    <ClCompile Include="src\stdlib\acl_msg.c" />
+    <ClCompile Include="src\stdlib\acl_myflock.c" />
+    <ClCompile Include="src\stdlib\acl_mylog.c" />
+    <ClCompile Include="src\stdlib\acl_readline.c" />
+    <ClCompile Include="src\stdlib\acl_vbuf.c" />
+    <ClCompile Include="src\stdlib\acl_vbuf_print.c" />
+    <ClCompile Include="src\stdlib\acl_vsprintf.c" />
+    <ClCompile Include="src\stdlib\acl_vstream.c" />
+    <ClCompile Include="src\stdlib\acl_vstream_popen.c" />
+    <ClCompile Include="src\stdlib\acl_vstring.c" />
+    <ClCompile Include="src\stdlib\acl_vstring_vstream.c" />
+    <ClCompile Include="src\stdlib\common\acl_argv.c" />
+    <ClCompile Include="src\stdlib\common\acl_argv_split.c" />
+    <ClCompile Include="src\stdlib\common\acl_array.c" />
+    <ClCompile Include="src\stdlib\common\acl_binhash.c" />
+    <ClCompile Include="src\stdlib\common\acl_btree.c" />
+    <ClCompile Include="src\stdlib\common\acl_cache.c" />
+    <ClCompile Include="src\stdlib\common\acl_cache2.c" />
+    <ClCompile Include="src\stdlib\common\acl_dlink.c" />
+    <ClCompile Include="src\stdlib\common\acl_fifo.c" />
+    <ClCompile Include="src\stdlib\common\acl_hash.c" />
+    <ClCompile Include="src\stdlib\common\acl_htable.c" />
+    <ClCompile Include="src\stdlib\common\acl_iplink.c" />
+    <ClCompile Include="src\stdlib\common\acl_ring.c" />
+    <ClCompile Include="src\stdlib\common\acl_stack.c" />
+    <ClCompile Include="src\stdlib\common\acl_token_tree.c" />
+    <ClCompile Include="src\stdlib\common\acl_ypipe.c" />
+    <ClCompile Include="src\stdlib\common\acl_yqueue.c" />
+    <ClCompile Include="src\stdlib\common\avl.c" />
+    <ClCompile Include="src\stdlib\configure\acl_loadcfg.c" />
+    <ClCompile Include="src\stdlib\configure\acl_xinetd_cfg.c" />
+    <ClCompile Include="src\stdlib\configure\acl_xinetd_params.c" />
+    <ClCompile Include="src\stdlib\debug\acl_debug_malloc.c" />
+    <ClCompile Include="src\stdlib\debug\debug_htable.c" />
+    <ClCompile Include="src\stdlib\filedir\acl_dir.c" />
+    <ClCompile Include="src\stdlib\filedir\acl_fhandle.c" />
+    <ClCompile Include="src\stdlib\filedir\acl_make_dirs.c" />
+    <ClCompile Include="src\stdlib\filedir\acl_sane_basename.c" />
+    <ClCompile Include="src\stdlib\filedir\acl_scan_dir.c" />
+    <ClCompile Include="src\stdlib\getopt.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_closefrom.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_close_on_exec.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_doze.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_duplex_pipe.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_fdtype.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_non_blocking.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_open_limit.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_peekfd.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_pipe.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_readable.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_read_wait.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_timed_read.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_timed_write.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_write_buf.c" />
+    <ClCompile Include="src\stdlib\iostuff\acl_write_wait.c" />
+    <ClCompile Include="src\stdlib\memory\acl_allocator.c" />
+    <ClCompile Include="src\stdlib\memory\acl_dbuf_pool.c" />
+    <ClCompile Include="src\stdlib\memory\acl_default_malloc.c" />
+    <ClCompile Include="src\stdlib\memory\acl_malloc_glue.c" />
+    <ClCompile Include="src\stdlib\memory\acl_mempool.c" />
+    <ClCompile Include="src\stdlib\memory\acl_mem_hook.c" />
+    <ClCompile Include="src\stdlib\memory\acl_mem_slice.c" />
+    <ClCompile Include="src\stdlib\memory\acl_slice.c" />
+    <ClCompile Include="src\stdlib\memory\mem_pool.c" />
+    <ClCompile Include="src\stdlib\memory\squid_allocator.c" />
+    <ClCompile Include="src\stdlib\memory\squid_allocator_tools.c" />
+    <ClCompile Include="src\stdlib\memory\vstring_pool.c" />
+    <ClCompile Include="src\stdlib\string\acl_alldig.c" />
+    <ClCompile Include="src\stdlib\string\acl_basename.c" />
+    <ClCompile Include="src\stdlib\string\acl_concatenate.c" />
+    <ClCompile Include="src\stdlib\string\acl_hex_code.c" />
+    <ClCompile Include="src\stdlib\string\acl_mystring.c" />
+    <ClCompile Include="src\stdlib\string\acl_split_at.c" />
+    <ClCompile Include="src\stdlib\string\acl_split_nameval.c" />
+    <ClCompile Include="src\stdlib\string\acl_str2time.c" />
+    <ClCompile Include="src\stdlib\string\strcasecmp.c" />
+    <ClCompile Include="src\stdlib\string\strcasestr.c" />
+    <ClCompile Include="src\stdlib\sys\acl_dll.c" />
+    <ClCompile Include="src\stdlib\sys\acl_env.c" />
+    <ClCompile Include="src\stdlib\sys\acl_exec_command.c" />
+    <ClCompile Include="src\stdlib\sys\acl_process.c" />
+    <ClCompile Include="src\stdlib\sys\acl_safe_getenv.c" />
+    <ClCompile Include="src\stdlib\sys\acl_sane_socketpair.c" />
+    <ClCompile Include="src\stdlib\sys\acl_sys_file.c" />
+    <ClCompile Include="src\stdlib\sys\acl_sys_socket.c" />
+    <ClCompile Include="src\stdlib\sys\acl_unsafe.c" />
+    <ClCompile Include="src\stdlib\sys\gettimeofday.c" />
+    <ClCompile Include="src\stdlib\sys\sleep.c" />
+    <ClCompile Include="src\stdlib\sys\snprintf.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_chroot_uid.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_core_limit.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_mychown.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_open_lock.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_safe_open.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_set_eugid.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_set_ugid.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_timed_wait.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_trace.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_transfer_fd.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_username.c" />
+    <ClCompile Include="src\stdlib\sys\unix\acl_watchdog.c" />
+    <ClCompile Include="src\stdlib\sys\unix\posix_signals.c" />
+    <ClCompile Include="src\thread\acl_pthread.c" />
+    <ClCompile Include="src\thread\acl_pthread_cond.c" />
+    <ClCompile Include="src\thread\acl_pthread_mutex.c" />
+    <ClCompile Include="src\thread\acl_pthread_pool.c" />
+    <ClCompile Include="src\thread\acl_pthread_rwlock.c" />
+    <ClCompile Include="src\thread\acl_sem.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\stdlib\acl_getopt.c.bak" />
+    <None Include="src\stdlib\acl_vbuf_print.c.old" />
+    <None Include="src\stdlib\acl_vstream.c.old" />
+    <None Include="src\thread\acl_pthread_pool.c.bak" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\aio\acl_aio.h" />
+    <ClInclude Include="include\code\acl_base64.h" />
+    <ClInclude Include="include\code\acl_code.h" />
+    <ClInclude Include="include\code\acl_gbcode.h" />
+    <ClInclude Include="include\code\acl_urlcode.h" />
+    <ClInclude Include="include\code\acl_vstring_base64.h" />
+    <ClInclude Include="include\db\acl_db.h" />
+    <ClInclude Include="include\db\acl_dberr.h" />
+    <ClInclude Include="include\db\acl_dbpool.h" />
+    <ClInclude Include="include\db\acl_dbsql.h" />
+    <ClInclude Include="include\db\acl_mdb.h" />
+    <ClInclude Include="include\db\zdb.h" />
+    <ClInclude Include="include\event\acl_events.h" />
+    <ClInclude Include="include\event\acl_timer.h" />
+    <ClInclude Include="include\init\acl_init.h" />
+    <ClInclude Include="include\lib_acl.h" />
+    <ClInclude Include="include\lib_util.h" />
+    <ClInclude Include="include\net\acl_access.h" />
+    <ClInclude Include="include\net\acl_connect.h" />
+    <ClInclude Include="include\net\acl_dns.h" />
+    <ClInclude Include="include\net\acl_host_port.h" />
+    <ClInclude Include="include\net\acl_ifconf.h" />
+    <ClInclude Include="include\net\acl_listen.h" />
+    <ClInclude Include="include\net\acl_mask_addr.h" />
+    <ClInclude Include="include\net\acl_net.h" />
+    <ClInclude Include="include\net\acl_netdb.h" />
+    <ClInclude Include="include\net\acl_res.h" />
+    <ClInclude Include="include\net\acl_sane_inet.h" />
+    <ClInclude Include="include\net\acl_sane_socket.h" />
+    <ClInclude Include="include\net\acl_tcp_ctl.h" />
+    <ClInclude Include="include\net\acl_valid_hostname.h" />
+    <ClInclude Include="include\net\acl_vstream_net.h" />
+    <ClInclude Include="include\vld.h" />
+    <ClInclude Include="src\aio\aio.h" />
+    <ClInclude Include="src\event\events.h" />
+    <ClInclude Include="src\event\events_define.h" />
+    <ClInclude Include="src\event\events_devpoll.h" />
+    <ClInclude Include="src\event\events_dog.h" />
+    <ClInclude Include="src\event\events_epoll.h" />
+    <ClInclude Include="src\event\events_fdtable.h" />
+    <ClInclude Include="src\event\events_iocp.h" />
+    <ClInclude Include="src\event\events_kqueue.h" />
+    <ClInclude Include="src\event\events_wmsg.h" />
+    <ClInclude Include="src\event\fdmap.h" />
+    <ClInclude Include="src\init\init.h" />
+    <ClInclude Include="src\net\dns\rfc1035.h" />
+    <ClInclude Include="src\net\dns\util.h" />
+    <ClInclude Include="src\net\Ipifcons.h" />
+    <ClInclude Include="src\net\IPTypes.h" />
+    <ClInclude Include="src\net\ipv6_patch.h" />
+    <ClInclude Include="src\private\private.h" />
+    <ClInclude Include="src\private\private_array.h" />
+    <ClInclude Include="src\private\private_fifo.h" />
+    <ClInclude Include="src\private\private_vstream.h" />
+    <ClInclude Include="src\private\sem.h" />
+    <ClInclude Include="src\private\thread.h" />
+    <ClInclude Include="src\stdlib\charmap.h" />
+    <ClInclude Include="src\stdlib\debug\htable.h" />
+    <ClInclude Include="src\stdlib\filedir\dir_sys_patch.h" />
+    <ClInclude Include="src\stdlib\memory\allocator.h" />
+    <ClInclude Include="src\stdlib\memory\malloc_vars.h" />
+    <ClInclude Include="src\stdlib\memory\ring.h" />
+    <ClInclude Include="src\stdlib\memory\squid_allocator.h" />
+    <ClInclude Include="src\stdlib\sys\unix\posix_signals.h" />
+    <ClInclude Include="src\stdlib\sys\_snprintf.h" />
+    <ClInclude Include="StdAfx.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,27 @@
+一、linux版本编译方法：
+依次进入acllib、aclredis、demo目录，
+执行：
+cmake . -DCMAKE_BUILD_TYPE=RELEASE
+make
+
+
+
+二、windows编译方法：
+vs2013打开mwredis.slh，选择x64编译。
+
+
+
+三、使用方法：
+1、包含aclredis/include/mw/mwredislib.h头文件。
+2、a)Windows版本链接静态库：acllib64.lib、aclredis64.lib；
+   b)Linux版本链接静态库：libaclredis.a、libacl.a。
+
+
+
+四、注意：
+1、cmake>=2.8、编译器需支持c++11
+2、libaclredis.a、libacl.a静态库是在CentOS 7.2编译好的release版本；
+   lib/acllib64.lib、aclredis64.lib静态库是在VS2013+WIN764编译好的release版本。
+
+
+

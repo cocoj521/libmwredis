@@ -1,0 +1,840 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\stdlib">
+      <UniqueIdentifier>{58aff550-d747-4c54-9209-2bc8688a45fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\common">
+      <UniqueIdentifier>{7c6f4c90-dd5e-438f-8c01-c665ed28b72c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\configure">
+      <UniqueIdentifier>{789d5c90-4c78-4a2b-b7cf-df535f12a4b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\debug">
+      <UniqueIdentifier>{dd650c78-4e6e-44d1-9d07-d8faf2be5f8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\filedir">
+      <UniqueIdentifier>{18f7ebd8-c5d9-4468-af34-ac53468770a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\iostuff">
+      <UniqueIdentifier>{59262c92-f3c0-41a7-bfd9-b30db98cacd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\memory">
+      <UniqueIdentifier>{634b65c7-1e3e-4d2a-9c84-194d36fdac5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\string">
+      <UniqueIdentifier>{2490c1bd-1d24-4869-b817-264da07779cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\sys">
+      <UniqueIdentifier>{4f43e1f3-0a66-49b3-9881-b5f6772df948}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\stdlib\sys\unix">
+      <UniqueIdentifier>{83eb12be-65e6-48ff-b484-767f41b45586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include">
+      <UniqueIdentifier>{5ddace8b-8d31-4d65-a5d7-00076f7230d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\thread">
+      <UniqueIdentifier>{27085bab-e939-4a3a-a253-59fbfcc5951b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\net">
+      <UniqueIdentifier>{2f4e217d-0a1b-40fa-840d-243d4e8fa1c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\code">
+      <UniqueIdentifier>{8b89a622-2f88-486d-9288-097f19a2b4ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\init">
+      <UniqueIdentifier>{733bf586-bb78-4ff8-8ff5-6cb181a927a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\net\connect">
+      <UniqueIdentifier>{58514a8d-ee20-4111-8873-eb5cdc57a3ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\net\dns">
+      <UniqueIdentifier>{1225969d-2fb2-4a30-9cd4-37c9bcd6566a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\net\listen">
+      <UniqueIdentifier>{88ebbc33-aebc-4e0e-a8b0-8a0752659587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\private">
+      <UniqueIdentifier>{88e2c14d-5265-48e0-8754-8f40763a8596}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\event">
+      <UniqueIdentifier>{4ccd2425-e192-4769-92f3-41299e35b423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\aio">
+      <UniqueIdentifier>{31b0f06f-5b7f-4d24-9e50-dfc450913772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include\aio">
+      <UniqueIdentifier>{7e6f1b65-1709-4356-8e8e-5ff087f684bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include\code">
+      <UniqueIdentifier>{2fa409cd-a95a-42ad-ba8e-5c853f651755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include\db">
+      <UniqueIdentifier>{a7daf71e-f7f5-47f8-b0b3-2d4224b5ddc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include\event">
+      <UniqueIdentifier>{86343dba-2a99-4b2f-a6c8-afe0c29533a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include\init">
+      <UniqueIdentifier>{1ef02141-3f98-44f1-9bea-0dc4192bef1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\include\net">
+      <UniqueIdentifier>{98204766-087a-4ea4-a9d1-48a6c865a0e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\stdlib\acl_file.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_getopt.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_mbox.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_meter_time.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_msg.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_myflock.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_mylog.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_readline.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_vbuf.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_vbuf_print.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_vsprintf.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_vstream.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_vstream_popen.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_vstring.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_vstring_vstream.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\getopt.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_atomic.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_chunk_chain.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\acl_debug.c">
+      <Filter>源文件\stdlib</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_argv.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_argv_split.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_array.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_binhash.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_btree.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_cache.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_cache2.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_dlink.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_fifo.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_hash.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_htable.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_iplink.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_ring.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_stack.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_token_tree.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_ypipe.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\acl_yqueue.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\common\avl.c">
+      <Filter>源文件\stdlib\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\configure\acl_loadcfg.c">
+      <Filter>源文件\stdlib\configure</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\configure\acl_xinetd_cfg.c">
+      <Filter>源文件\stdlib\configure</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\configure\acl_xinetd_params.c">
+      <Filter>源文件\stdlib\configure</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\debug\acl_debug_malloc.c">
+      <Filter>源文件\stdlib\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\debug\debug_htable.c">
+      <Filter>源文件\stdlib\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\filedir\acl_dir.c">
+      <Filter>源文件\stdlib\filedir</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\filedir\acl_fhandle.c">
+      <Filter>源文件\stdlib\filedir</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\filedir\acl_make_dirs.c">
+      <Filter>源文件\stdlib\filedir</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\filedir\acl_sane_basename.c">
+      <Filter>源文件\stdlib\filedir</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\filedir\acl_scan_dir.c">
+      <Filter>源文件\stdlib\filedir</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_close_on_exec.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_closefrom.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_doze.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_duplex_pipe.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_fdtype.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_non_blocking.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_open_limit.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_peekfd.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_pipe.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_read_wait.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_readable.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_timed_read.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_timed_write.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_write_buf.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\iostuff\acl_write_wait.c">
+      <Filter>源文件\stdlib\iostuff</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_allocator.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_dbuf_pool.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_default_malloc.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_malloc_glue.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_mem_hook.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_mem_slice.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_mempool.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\acl_slice.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\mem_pool.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\squid_allocator.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\squid_allocator_tools.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\memory\vstring_pool.c">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_dll.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_env.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_exec_command.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_process.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_safe_getenv.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_sane_socketpair.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_sys_file.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_sys_socket.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\acl_unsafe.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\gettimeofday.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\sleep.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\snprintf.c">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_chroot_uid.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_core_limit.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_mychown.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_open_lock.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_safe_open.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_set_eugid.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_set_ugid.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_timed_wait.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_trace.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_transfer_fd.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_username.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\acl_watchdog.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\sys\unix\posix_signals.c">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread\acl_pthread_cond.c">
+      <Filter>源文件\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread\acl_pthread_mutex.c">
+      <Filter>源文件\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread\acl_pthread_pool.c">
+      <Filter>源文件\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread\acl_pthread_rwlock.c">
+      <Filter>源文件\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread\acl_sem.c">
+      <Filter>源文件\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread\acl_pthread.c">
+      <Filter>源文件\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_alldig.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_basename.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_concatenate.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_hex_code.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_mystring.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_split_at.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_split_nameval.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\acl_str2time.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\strcasecmp.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdlib\string\strcasestr.c">
+      <Filter>源文件\stdlib\string</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_sane_inet.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\code\acl_base64.c">
+      <Filter>源文件\code</Filter>
+    </ClCompile>
+    <ClCompile Include="src\code\acl_vstring_base64.c">
+      <Filter>源文件\code</Filter>
+    </ClCompile>
+    <ClCompile Include="src\init\acl_init.c">
+      <Filter>源文件\init</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_access.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_host_port.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_ifconf.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_mask_addr.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_sane_socket.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_tcp_ctl.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_valid_hostname.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\acl_vstream_net.c">
+      <Filter>源文件\net</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\connect\acl_inet_connect.c">
+      <Filter>源文件\net\connect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\connect\acl_sane_connect.c">
+      <Filter>源文件\net\connect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\connect\acl_stream_connect.c">
+      <Filter>源文件\net\connect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\connect\acl_timed_connect.c">
+      <Filter>源文件\net\connect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\connect\acl_unix_connect.c">
+      <Filter>源文件\net\connect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\dns\acl_dns.c">
+      <Filter>源文件\net\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\dns\acl_netdb.c">
+      <Filter>源文件\net\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\dns\acl_netdb_cache.c">
+      <Filter>源文件\net\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\dns\acl_res.c">
+      <Filter>源文件\net\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\dns\res_util.c">
+      <Filter>源文件\net\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\dns\rfc1035.c">
+      <Filter>源文件\net\dns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\listen\acl_fifo_listen.c">
+      <Filter>源文件\net\listen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\listen\acl_inet_listen.c">
+      <Filter>源文件\net\listen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\listen\acl_sane_accept.c">
+      <Filter>源文件\net\listen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\listen\acl_sane_bind.c">
+      <Filter>源文件\net\listen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\net\listen\acl_unix_listen.c">
+      <Filter>源文件\net\listen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\private\private_array.c">
+      <Filter>源文件\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\private\private_fifo.c">
+      <Filter>源文件\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\private\private_vstream.c">
+      <Filter>源文件\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\private\sem.c">
+      <Filter>源文件\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\private\thread_mutex.c">
+      <Filter>源文件\private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\acl_events.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\acl_timer.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_alloc.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_dog.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_epoll_thr.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_fdtable.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_iocp.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_kernel.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_kernel_thr.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_poll.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_poll_thr.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_select.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_select_thr.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_timer.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_timer_thr.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\events_wmsg.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event\fdmap.c">
+      <Filter>源文件\event</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aio\acl_aio.c">
+      <Filter>源文件\aio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aio\acl_aio_connect.c">
+      <Filter>源文件\aio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aio\acl_aio_listen.c">
+      <Filter>源文件\aio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aio\acl_aio_read.c">
+      <Filter>源文件\aio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aio\acl_aio_stream.c">
+      <Filter>源文件\aio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aio\acl_aio_write.c">
+      <Filter>源文件\aio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aio\aio_callback.c">
+      <Filter>源文件\aio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\code\acl_urlcode.c">
+      <Filter>源文件\code</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\stdlib\acl_getopt.c.bak">
+      <Filter>源文件\stdlib</Filter>
+    </None>
+    <None Include="src\stdlib\acl_vbuf_print.c.old">
+      <Filter>源文件\stdlib</Filter>
+    </None>
+    <None Include="src\stdlib\acl_vstream.c.old">
+      <Filter>源文件\stdlib</Filter>
+    </None>
+    <None Include="src\thread\acl_pthread_pool.c.bak">
+      <Filter>源文件\thread</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\stdlib\charmap.h">
+      <Filter>源文件\stdlib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\debug\htable.h">
+      <Filter>源文件\stdlib\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\filedir\dir_sys_patch.h">
+      <Filter>源文件\stdlib\filedir</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\memory\allocator.h">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\memory\malloc_vars.h">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\memory\ring.h">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\memory\squid_allocator.h">
+      <Filter>源文件\stdlib\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\sys\_snprintf.h">
+      <Filter>源文件\stdlib\sys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stdlib\sys\unix\posix_signals.h">
+      <Filter>源文件\stdlib\sys\unix</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lib_acl.h">
+      <Filter>头文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\lib_util.h">
+      <Filter>头文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vld.h">
+      <Filter>头文件\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\init\init.h">
+      <Filter>源文件\init</Filter>
+    </ClInclude>
+    <ClInclude Include="src\net\Ipifcons.h">
+      <Filter>源文件\net</Filter>
+    </ClInclude>
+    <ClInclude Include="src\net\IPTypes.h">
+      <Filter>源文件\net</Filter>
+    </ClInclude>
+    <ClInclude Include="src\net\ipv6_patch.h">
+      <Filter>源文件\net</Filter>
+    </ClInclude>
+    <ClInclude Include="src\net\dns\rfc1035.h">
+      <Filter>源文件\net\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="src\net\dns\util.h">
+      <Filter>源文件\net\dns</Filter>
+    </ClInclude>
+    <ClInclude Include="src\private\private.h">
+      <Filter>源文件\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\private\private_array.h">
+      <Filter>源文件\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\private\private_fifo.h">
+      <Filter>源文件\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\private\private_vstream.h">
+      <Filter>源文件\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\private\sem.h">
+      <Filter>源文件\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\private\thread.h">
+      <Filter>源文件\private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_define.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_devpoll.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_dog.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_epoll.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_fdtable.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_iocp.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_kqueue.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\events_wmsg.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\event\fdmap.h">
+      <Filter>源文件\event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\aio\aio.h">
+      <Filter>源文件\aio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\aio\acl_aio.h">
+      <Filter>头文件\include\aio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\code\acl_code.h">
+      <Filter>头文件\include\code</Filter>
+    </ClInclude>
+    <ClInclude Include="include\code\acl_gbcode.h">
+      <Filter>头文件\include\code</Filter>
+    </ClInclude>
+    <ClInclude Include="include\code\acl_urlcode.h">
+      <Filter>头文件\include\code</Filter>
+    </ClInclude>
+    <ClInclude Include="include\code\acl_vstring_base64.h">
+      <Filter>头文件\include\code</Filter>
+    </ClInclude>
+    <ClInclude Include="include\code\acl_base64.h">
+      <Filter>头文件\include\code</Filter>
+    </ClInclude>
+    <ClInclude Include="include\db\acl_dberr.h">
+      <Filter>头文件\include\db</Filter>
+    </ClInclude>
+    <ClInclude Include="include\db\acl_dbpool.h">
+      <Filter>头文件\include\db</Filter>
+    </ClInclude>
+    <ClInclude Include="include\db\acl_dbsql.h">
+      <Filter>头文件\include\db</Filter>
+    </ClInclude>
+    <ClInclude Include="include\db\acl_mdb.h">
+      <Filter>头文件\include\db</Filter>
+    </ClInclude>
+    <ClInclude Include="include\db\zdb.h">
+      <Filter>头文件\include\db</Filter>
+    </ClInclude>
+    <ClInclude Include="include\db\acl_db.h">
+      <Filter>头文件\include\db</Filter>
+    </ClInclude>
+    <ClInclude Include="include\event\acl_events.h">
+      <Filter>头文件\include\event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\event\acl_timer.h">
+      <Filter>头文件\include\event</Filter>
+    </ClInclude>
+    <ClInclude Include="include\init\acl_init.h">
+      <Filter>头文件\include\init</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_connect.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_dns.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_host_port.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_ifconf.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_listen.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_mask_addr.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_net.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_netdb.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_res.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_sane_inet.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_sane_socket.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_tcp_ctl.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_valid_hostname.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_vstream_net.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net\acl_access.h">
+      <Filter>头文件\include\net</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
