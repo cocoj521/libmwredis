@@ -95,6 +95,22 @@ int MWRedisSliceList::list_totallen(std::string& error)
     return totallen;
 }
 
+int MWRedisSliceList::list_len(const uint32_t& slotindex, std::string& error)
+{
+    auto pRedisClient = m_pRedisClient.lock();
+    assert(nullptr != pRedisClient);
+    if (nullptr == pRedisClient) {
+        error = "m_pRedisClient is nullptr";
+        return -1;
+    }
+
+    if (slotindex >= m_list_slicenum) {
+        return -2;
+    }
+
+    std::string key = m_topic + ":" + std::to_string(slotindex);
+    return pRedisClient->llen(key, error);
+}
 
 int MWRedisSliceList::listrpush(const std::string& buf, uint32_t* slotindex, std::string& error)
 {
@@ -246,6 +262,53 @@ int MWRedisSliceList::listlpop(std::string& buf, uint32_t* slotindex, std::strin
 }
 
 
+int MWRedisSliceList::listbatchlpop(int batchsize, std::vector<std::string>& buflist, uint32_t* slotindex, std::string& error)
+{
+    assert(!m_topic.empty());
+    if (m_topic.empty() || batchsize < 1) {
+        error = "invalid parameter";
+        return -1;
+    }
+
+    auto pRedisClient = m_pRedisClient.lock();
+    assert(nullptr != pRedisClient);
+    if (nullptr == pRedisClient) {
+        error = "m_pRedisClient is nullptr";
+        return -2;
+    }
+
+    int ret = 0;
+    uint64_t start_index = (m_last_pop_index++) % m_list_slicenum;
+    uint64_t index = start_index;
+    do
+    {
+        //轮循查找
+        index = (index + 1) % m_list_slicenum;
+        std::string key = m_topic + ":" + std::to_string(index);
+        ret = pRedisClient->zlpop_list(key.c_str(), batchsize, buflist, error);
+        if (ret < 0) {
+            break;
+        }
+        else if (0 == ret) { //执行成功
+
+            if (!buflist.empty()) //取到了数据
+            {
+                if (nullptr != slotindex){
+                    *slotindex = static_cast<uint32_t>(index);
+                }
+                break;  
+            }
+        }
+
+        if (index == start_index) { //所有list都取不到数据
+            ret = 0;
+            break;
+        }
+    } while (1);
+
+    return ret;
+}
+
 
 int MWRedisSliceList::list_robin_lpop(std::string& buf, uint32_t* slotindex, std::string& error)
 {
@@ -294,5 +357,81 @@ int MWRedisSliceList::list_lpop_by_index(const uint32_t& slotindex, std::string&
 
     std::string key = m_topic + ":" + std::to_string(slotindex);
     return pRedisClient->lpop(key.c_str(), buf, error);
+}
+
+int MWRedisSliceList::list_lrange_by_index(
+    const uint32_t& slotindex,
+    const uint32_t& start,
+    const uint32_t& end,
+    std::vector<std::string>& result,
+    std::string& error)
+{
+    assert(!m_topic.empty());
+    if (m_topic.empty() || 
+        start <= end) {
+        error = "invalid parameter";
+        return -1;
+    }
+
+    auto pRedisClient = m_pRedisClient.lock();
+    assert(nullptr != pRedisClient);
+    if (nullptr == pRedisClient) {
+        error = "m_pRedisClient is nullptr";
+        return -2;
+    }
+
+    if (slotindex >= m_list_slicenum) {
+        error = "index is out of range";
+        return -3;
+    }
+
+    std::string key = m_topic + ":" + std::to_string(slotindex);
+    return pRedisClient->lrange(key.c_str(), 
+        start,
+        end,
+        result,
+        error);
+}
+
+
+int MWRedisSliceList::list_lrange(
+    const uint32_t& start,
+    const uint32_t& end,
+    std::vector<std::string>& result,
+    std::string& error)
+{
+    assert(!m_topic.empty());
+    if (m_topic.empty() ||
+        start <= end) {
+        error = "invalid parameter";
+        return -1;
+    }
+
+    auto pRedisClient = m_pRedisClient.lock();
+    assert(nullptr != pRedisClient);
+    if (nullptr == pRedisClient) {
+        error = "m_pRedisClient is nullptr";
+        return -2;
+    }
+
+    int ret = 0;
+    for (uint32_t slotindex = 0; slotindex < m_list_slicenum; slotindex++) 
+    {
+        std::string key = m_topic + ":" + std::to_string(slotindex);
+        ret = pRedisClient->lrange(key.c_str(),
+            start,
+            end,
+            result,
+            error);
+
+        if (ret < 0) { //error
+            return ret;
+        }
+
+        if (ret >= 0 && !result.empty()) {
+            break;
+        }
+    }
+    return ret;
 }
 

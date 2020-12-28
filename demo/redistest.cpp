@@ -10,7 +10,9 @@
 #include <iostream>
 #include <memory>
 #include "redistest.h"
-
+#include <chrono>   
+using namespace std;
+using namespace chrono;
 
 template <class Container>
 void split3(const std::string& str, Container& cont,
@@ -26,44 +28,59 @@ void split3(const std::string& str, Container& cont,
     cont.push_back(str.substr(previous, current - previous));
 }
 
+
+
 int doTestRedis(int argc, char* argv[])
 {
     if (argc < 5)
     {
         printf("Usage:%s cluster poolisze nretrylimit stdoutopen\n", argv[0]);
+        printf("Usage:%s cluster poolisze nretrylimit stdoutopen password\n", argv[0]);
         printf("Usage:%s 192.169.7.135:7001,192.169.7.135:7002,192.169.7.136:7001,192.169.7.136:7002,192.169.7.137:7001,192.169.7.137:7002 16 15 0\n", argv[0]);
+        printf("Usage:%s \"192.169.7.197:7001;192.169.7.197:7004;192.169.7.198:7002;192.169.7.198:7003;192.169.7.198:7005;192.169.7.197:7006\" 16 15 0 123456\n", argv[0]);
         return -1;
     }
 
-    //std::string redis_cluster = "192.169.7.135:7001,192.169.7.135:7002,192.169.7.136:7001,192.169.7.136:7002,192.169.7.137:7001,192.169.7.137:7002"; //redis集群地址，多地址之间用英文逗号隔开。如:192.169.1.22:6379,192.169.1.23:6380
-
+    //std::string redis_cluster = "192.169.7.135:7001;192.169.7.135:7002;192.169.7.136:7001;192.169.7.136:7002;192.169.7.137:7001;192.169.7.137:7002"; //redis集群地址，多地址之间用;分号隔开。如:192.169.1.22:6379;192.169.1.23:6380
+    //192.169.7.197:7001; 192.169.7.197:7004; 192.169.7.198:7002; 192.169.7.198:7003; 192.169.7.198:7005; 192.169.7.197:7006; pwd=123456
     std::string redis_cluster = argv[1];
     int poolsize = atoi(argv[2]);
+
     int nretrylimit = atoi(argv[3]);
     bool bStdoutOpen = atoi(argv[4])==0?false:true;
-
-
+    std::string pwd;
+    if (argc >= 6) {
+        pwd = argv[5];
+    }
+    
     TestRedis tester;
-    std::string redis_pwd = ""; //redis访问密码，默认为空
-    int nConnTimeout = 30; //连接超时时间，默认为30秒,最大值60
-    int nRWTimeout = 30;  //读写超时时间，默认为30秒,最大值60
+
+    std::string redis_pwd = pwd; //redis访问密码，默认为空
+    int nConnTimeout = 3; //连接超时时间，默认为30秒,最大值60
+    int nRWTimeout = 3;  //读写超时时间，默认为30秒,最大值60
     int nRetryLimit = nretrylimit; //设置重定向的最大阀值，若重定向次数超过此阀值则报错,最大值30
     int nRetryInterval = 1; //当某个连接池结点出问题，设置探测该连接结点是否恢复的时间间隔(秒)，当该值为 0 时，则不检测
     int nRetrySleep = 500; //当重定向次数 >= 2 时每次再重定向此函数设置休息的时间(毫秒)，默认为500毫秒
     int nPoolSize = poolsize; // 最大线程数，默认为4，REDIS最大支持16线程
     
-    printf("redis_cluster:%s, poolisze:%d, nretrylimit:%d\n", 
+    printf("redis_cluster:%s,\n nConnTimeout:%d, nRWTimeout:%d, poolisze:%d, nretrylimit:%d, nRetryInterval:%d, nRetrySleep:%d\n", 
         redis_cluster.c_str(),
+        nConnTimeout, 
+        nRWTimeout,
         poolsize,
-        nretrylimit);
+        nretrylimit,
+        nRetryInterval,
+        nRetrySleep);
 
+    size_t start_tm = time(0);
     int ret = tester.InitRedisDB(redis_cluster, redis_pwd,
         nConnTimeout, nRWTimeout,
         nRetryLimit, nRetryInterval,
         nRetrySleep, nPoolSize, true, bStdoutOpen);
+    size_t end_tm = time(0);
     if (0 != ret)
     {
-        fprintf(stderr, "failed to init redis, ret:%d\n", ret);
+        fprintf(stderr, "failed to init redis, ret:%d, cost:%lu(s)\n", ret, end_tm - start_tm);
         return -1;
     }
 
@@ -93,6 +110,7 @@ int doTestRedis(int argc, char* argv[])
         printf("4:list lpop test\n");
         printf("5:mt test\n");
         printf("6:slice list\n");
+        printf("7:test exception\n");
         printf("---------------------------------------------------------------\n");
         printf("\n");
         printf("input please:\n");
@@ -303,11 +321,14 @@ int doTestRedis(int argc, char* argv[])
             {
                 printf("------------------------------------------------------------------------------------------------------------------\n");
                 printf("list_topic,sharednum,pushthreadnum,pushtotalnum,popthreadnum,batchsize,poptotalnum\n");
-                printf("examples:\nhi,6,8,1000000,4,100,2000000\n");
-                printf("hi,6,1,20,1,3,20\n");
-                printf("hi,6,0,20,1,3,20\n");
-                printf("hi,6,12,1000000,0,100,0\n");
-                printf("hi,6,0,1000000,12,100,1000000\n");
+                printf("examples:\nhi,6,8,1000000,4,1,2000000\n");
+                printf("hi,16,1,20,1,1,20\n");
+                printf("hi,16,0,20,1,1,20\n");
+                printf("hi,16,12,1000000,0,0,0\n");
+                printf("hi,16,0,0,8,1,1000000\n");
+                printf("hi,16,0,0,12,1,1000000\n");
+                printf("hi,16,0,0,1,100,1000000\n");
+				printf("SMS_MT_WAIT_DEAL_04,16,0,0,1,1,1000\n");
                 printf("------------------------------------------------------------------------------------------------------------------\n");
                 printf("\n");
                 printf("please input parameters that use a comma to separate values:\n");
@@ -357,6 +378,53 @@ int doTestRedis(int argc, char* argv[])
                 endtm - starttm);
         }
         break;
+        case '7':
+        {
+            std::string hgetall_key_name = "";
+            int threadnum = 0;
+            uint64_t totalnum = 0;
+            std::vector<std::string> values;
+            do 
+            {
+                printf("------------------------------------------------------------------------------------------------------------------\n");
+                printf("hgetall_key_name,threadnum,totalnum\n");
+                printf("examples:\nmsg888,1,100\n");
+                printf("msg888,1,100000\n");
+                printf("msg888,1,1000000\n");
+                printf("msg888,8,5000000\n");
+                printf("msg888,8,10000000\n");
+                printf("------------------------------------------------------------------------------------------------------------------\n");
+                printf("\n");
+                printf("please input parameters that use a comma to separate values:\n");
+
+                std::string inputdata;
+                std::getline(std::cin, inputdata);
+
+                printf("inputdata:%s\n", inputdata.c_str());
+                values.clear();
+                split3<std::vector<std::string>>(inputdata, values, ",");
+
+                if (values.size() >= 3)
+                {
+                    hgetall_key_name = values[0];
+                    threadnum = atoi(values[1].c_str());
+                    totalnum = atol(values[2].c_str());
+                    if (!hgetall_key_name.empty() && 
+                        threadnum > 0 && 
+                        totalnum > 0)
+                    {
+                        break;
+                    }
+                }
+                printf("\n\n***error***!input format incorrectly!\n");
+            } while (1);
+          
+            int64_t starttm = time(NULL);
+            tester.test_exception(hgetall_key_name, threadnum, totalnum);
+            int64_t endtm = time(NULL);
+            printf("test_exception(%s, %d, %lu) cost:%ld(s), finished", hgetall_key_name.c_str(), threadnum, totalnum, endtm - starttm);
+        }
+        break;
         case '0':
         {
             printf("exited\n");
@@ -371,6 +439,7 @@ int doTestRedis(int argc, char* argv[])
             break; //exit
         }
     }
+
 
     tester.DestoryRedisDB();
     return 0;
@@ -398,6 +467,7 @@ int TestRedis::InitRedisDB(const std::string& strRedisCluster,
         MWRedisClientFactory::Destroy(e);
     });
     assert(nullptr != redisClient);
+    std::string error;
     int ret = redisClient->initRedis(strRedisCluster,
         strRedisPwd,
         nConnTimeout,
@@ -407,7 +477,8 @@ int TestRedis::InitRedisDB(const std::string& strRedisCluster,
         nRetrySleep,
         nPoolSize,
         bPreset,
-        bStdoutOpen);
+        bStdoutOpen,
+        error);
 
     if (0 == ret) {
         m_pRedisClient = redisClient;
@@ -429,6 +500,7 @@ void TestRedis::DestoryRedisDB()
 
 int TestRedis::test_set(std::string& prefix, int thrnum, uint64_t allnum)
 {
+    /*
     {
         std::vector<std::string> names = { "msgid", "createtm" };
         std::string item = "333333333";
@@ -438,7 +510,7 @@ int TestRedis::test_set(std::string& prefix, int thrnum, uint64_t allnum)
         if (ret < 0) {
             fprintf(stderr, "failed to hmget(key:%s), error:%s\n", item.c_str(), error.c_str());
         }
-    }
+    }*/
     std::atomic<int> thrActiveNum;
     thrActiveNum.store(thrnum);
     std::atomic<uint64_t> nallSetCnt;
@@ -890,7 +962,6 @@ int TestRedis::test_mt(std::string mt_prefix, int push_mt_thrnum, uint64_t push_
     return 0;
 }
 
-
 int TestRedis::test_slice_list(
     std::string list_topic,
     int shard_num,
@@ -917,54 +988,11 @@ int TestRedis::test_slice_list(
 
     std::atomic<uint64_t> nallPopQFailedcnt;
     nallPopQFailedcnt.store(0);
-
-
-    MWRedisSliceList slist(m_pRedisClient);
-
-    {
-        std::string error;
-        int ret = slist.listinit(list_topic, shard_num, error);
-        if (0 != ret)
-        {
-            fprintf(stderr, "failed to listinit(list_topic:%s), ret:%d\n", list_topic.c_str(), ret);
-            return -1;
-        }
-
-        ret = slist.is_available(error);
-        if (ret < 0)
-        {
-            fprintf(stderr, "failed to is_available(list_topic:%s), ret:%d\n", list_topic.c_str(), ret);
-            return -2;
-        }
-
-        /*
-        {
-            char szbuf[64] = { 0 };
-            szbuf[1] = '1';
-            szbuf[3] = '3';
-            szbuf[4] = 4;
-            szbuf[63] = 63;
-            std::string buf(szbuf, 64);
-            slist.listrpush(buf, nullptr, error);
-
-            std::string popbuf;
-            slist.listlpop(popbuf, nullptr, error);
-
-            if (buf != popbuf) {
-                fprintf(stderr, "\n\npush buf(size:%ld) is NOT equal to pop buf(size:%ld)\n", buf.size(), popbuf.size());
-            }
-            else {
-                printf("\n\npush buf(size:%ld) is equal to pop buf(size:%ld)\n", buf.size(), popbuf.size());
-            }
-        }
-        */
-    }
-
     std::vector<std::shared_ptr<std::thread>> thrs;
 
     for (int index = 0; index < pushthreadnum; index++)
     {
-            std::shared_ptr<std::thread> p(new std::thread([&]() {
+        std::shared_ptr<std::thread> p(new std::thread([&]() {
             std::this_thread::sleep_for(std::chrono::seconds(1));
 
             std::ostringstream os;
@@ -974,19 +1002,28 @@ int TestRedis::test_slice_list(
             uint64_t i;
             std::string error;
             int ret = 0;
+
+            //1KB
+            srand(time(0));
+            char buf[1024] = { 0 };
+            for (size_t j = 0; j < sizeof(buf); j++)
+            {
+                buf[j] = rand() % 10;
+            }
+            std::string basevalue = list_topic + std::string(buf, 1000);
             while ((i = nallPushQ.fetch_add(1)) < pushtotalnum)
             {
                 int64_t nowtm = time(NULL);
-                std::string value = list_topic + std::to_string(i);   
+                std::string value = basevalue + std::to_string(i);
                 std::vector<std::string> values = { value };
                 uint32_t slotindex;
                 //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
                 //printf("enter listrpush:%ld\n", time(NULL));
-                ret = slist.listrpush(values, &slotindex, error);
+                ret = m_pRedisClient->slicelist_rpush(list_topic, shard_num, value, &slotindex, error);
                 //printf("leave listrpush:%ld\n", time(NULL));
                 if (ret < 0) {
-                    fprintf(stderr, "failed to listrpush(key:%s, tm:%ld), error:%s\n", value.c_str(), nowtm, error.c_str());
-                    nallPopQFailedcnt++;
+                    fprintf(stderr, "failed to listrpush(value:%s, tm:%ld), error:%s\n", value.c_str(), nowtm, error.c_str());
+                    nallPushQFailedcnt++;
                 }
                 //printf("listrpush slotindex:%d\n", slotindex);
             }
@@ -995,6 +1032,7 @@ int TestRedis::test_slice_list(
         }));
         thrs.push_back(p);
     }
+
 
     for (int index = 0; index < popthreadnum; index++)
     {
@@ -1012,24 +1050,44 @@ int TestRedis::test_slice_list(
             while ((i = nallPopCnt.fetch_add(1)) < poptotalnum)
             {
                 int64_t nowtm = time(NULL);
-                std::string buf;
-                uint32_t slotindex;
-                ret = slist.listlpop(buf, &slotindex, error);
-                std::vector<std::string> values;
-                if (0 == ret) { //空,无数据
-                    //fprintf(stderr, "list_rdrobin_range is Empty(key:%s, i:%ld, tm:%ld)\n", list_topic.c_str(), i, nowtm);
-                }
-                else if (ret < 0) { //出错了
-                    fprintf(stderr, "failed to list_rdrobin_range(key:%s, i:%ld, tm:%ld), error:%s\n", list_topic.c_str(), i, nowtm, error.c_str());
-                    nallPopQFailedcnt++;
-                }
-                else {
-                    assert(!buf.empty());
-                    if (!buf.empty()) {
-                        nallRealPopCnt.fetch_add(1);
+                if (batchsize > 1)
+                {
+                    uint32_t slotindex;
+                    std::vector<std::string> buflist;
+                    ret = m_pRedisClient->slicelist_batchlpop(list_topic, shard_num, batchsize, buflist, &slotindex, error);
+                    if (ret < 0) { //出错了
+                        fprintf(stderr, "failed to list_rdrobin_range(key:%s, i:%ld, tm:%ld), error:%s\n", list_topic.c_str(), i, nowtm, error.c_str());
+                        nallPopQFailedcnt++;
+                    }
+                    else if (0 == ret) {  //执行成功
+
+                        if (buflist.empty()) { //空,无数据
+                            //Nothing to to here
+                        }
+                        else { //有数据
+                            nallRealPopCnt.fetch_add(buflist.size());
+                        }
                     }
                 }
-                //printf("listrpop slotindex:%d, buf:%s\n", slotindex, buf.c_str());
+                else {
+                    std::string buf;
+                    uint32_t slotindex;
+                    ret = m_pRedisClient->slicelist_lpop(list_topic, shard_num, buf, &slotindex, error);
+                    if (0 == ret) { //空,无数据
+                        //fprintf(stderr, "list_rdrobin_range is Empty(key:%s, i:%ld, tm:%ld)\n", list_topic.c_str(), i, nowtm);
+                    }
+                    else if (ret < 0) { //出错了
+                        fprintf(stderr, "failed to slicelist_lpop(key:%s, i:%ld, tm:%ld), error:%s\n", list_topic.c_str(), i, nowtm, error.c_str());
+                        nallPopQFailedcnt++;
+                    }
+                    else {
+                        assert(!buf.empty());
+                        if (!buf.empty()) {
+                            nallRealPopCnt.fetch_add(1);
+                        }
+                    }
+                    //printf("listrpop slotindex:%d, buf:%s\n", slotindex, buf.c_str());
+                }
             }
             thrActiveNum--;
             fprintf(stdout, "pop shared thread exited!\n");
@@ -1047,13 +1105,16 @@ int TestRedis::test_slice_list(
     std::atomic<uint64_t> last_nallRealPopCnt;
     last_nallRealPopCnt.store(0);
 
+    std::string err;
     while (thrActiveNum != 0) {
-        printf("shard list(%s) push speed:%lu/s, total push error num:%lu, pop speed:%lu/s, total real pop number:%lu, total pop error num:%lu\n",
+        printf("shard list(%s) all_size:%d, push speed:%lu/s, total push error num:%lu, pop speed:%lu/s, total real pop number:%lu(%lu/s), total pop error num:%lu\n",
             list_topic.c_str(),
+            m_pRedisClient->slicelist_totallen(list_topic, shard_num, err),
             nallPushQ - last_nallPushQ,
             nallPushQFailedcnt - 0,
             nallPopCnt - last_nallPopCnt,
             nallRealPopCnt - 0,
+            nallRealPopCnt - last_nallRealPopCnt,
             nallPopQFailedcnt - 0
             );
         last_nallPushQ.store(nallPushQ);
@@ -1068,5 +1129,293 @@ int TestRedis::test_slice_list(
             thrs[i]->join();
     }
 
+
     return 0;
 }
+
+int TestRedis::test_exception(std::string hgetall_key_name, int threadnum, uint64_t totalnum)
+{
+    std::atomic<int> thrActiveNum;
+    thrActiveNum.store(threadnum);
+
+    std::atomic<uint64_t> nallTestCnt;
+    nallTestCnt.store(0);
+
+    std::atomic<uint64_t> nallFailedCnt;
+    nallFailedCnt.store(0);
+
+    std::atomic<uint64_t> nallTimeoutCnt;
+    nallTimeoutCnt.store(0);
+
+    std::vector<std::shared_ptr<std::thread>> thrs;
+
+    for (int index = 0; index < threadnum; index++)
+    {
+        std::shared_ptr<std::thread> p(new std::thread([&]() {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+
+            std::ostringstream os;
+            os << std::this_thread::get_id();
+            printf("thread id:%s\n", os.str().c_str());
+
+            uint64_t i;
+            std::string error;
+            int ret = 0;
+            //int curIndex = 0;
+            while ((i = nallTestCnt.fetch_add(1)) < totalnum)
+            {
+                auto start = system_clock::now();
+
+                std::map<std::string, std::string> values;
+                ret = m_pRedisClient->hgetall(hgetall_key_name.c_str(), values, error);
+                if (ret < 0) 
+                {
+                    fprintf(stdout, "failed to hgetall(%s), ret:%d, error:%s\n", hgetall_key_name.c_str(), ret, error.c_str());
+                    nallFailedCnt++;
+                }
+                
+                assert(!values.empty());
+                auto end = system_clock::now();
+                auto duration = duration_cast<milliseconds>(end - start);
+                if (duration.count() > 1000) { //毫秒
+                    fprintf(stdout, "cost too much:%lu(ms)\n", duration.count());
+                    nallTimeoutCnt++;
+                }
+
+                if (i % 1000 == 0) {
+                    fprintf(stdout, "running: %lu\n", i);
+                }
+            }
+            thrActiveNum--;
+            fprintf(stdout, "test exception thread exited!\n");
+        }));
+        thrs.push_back(p);
+    }
+
+
+    std::atomic<uint64_t> last_nallTestCnt;
+    last_nallTestCnt.store(0);
+    while (thrActiveNum != 0) {
+        printf("test exception (key:%s) req speed:%lu/s, total error num:%lu, total timeout(>=1s) num:%lu\n",
+            hgetall_key_name.c_str(),
+            nallTestCnt - last_nallTestCnt,
+            nallFailedCnt - 0,
+            nallTimeoutCnt - 0
+            );
+
+        last_nallTestCnt.store(nallTestCnt);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+    //等待线程平滑退出
+    for (size_t i = 0; i < thrs.size(); i++) {
+        if (thrs[i]->joinable())
+            thrs[i]->join();
+    }
+
+    return 0;
+}
+
+// int TestRedis::test_slice_list(
+//     std::string list_topic,
+//     int shard_num,
+//     int pushthreadnum,
+//     uint64_t pushtotalnum,
+//     int popthreadnum,
+//     int batchsize,
+//     uint64_t poptotalnum)
+// {
+//     std::atomic<int> thrActiveNum;
+//     thrActiveNum.store(pushthreadnum + popthreadnum);
+// 
+//     std::atomic<uint64_t> nallPushQ;
+//     nallPushQ.store(0);
+// 
+//     std::atomic<uint64_t> nallPopCnt;
+//     nallPopCnt.store(0);
+// 
+//     std::atomic<uint64_t> nallRealPopCnt;
+//     nallRealPopCnt.store(0);
+// 
+//     std::atomic<uint64_t> nallPushQFailedcnt;
+//     nallPushQFailedcnt.store(0);
+// 
+//     std::atomic<uint64_t> nallPopQFailedcnt;
+//     nallPopQFailedcnt.store(0);
+// 
+// 
+//     MWRedisSliceList slist(m_pRedisClient);
+// 
+//     {
+//         std::string error;
+//         int ret = slist.listinit(list_topic, shard_num, error);
+//         if (0 != ret)
+//         {
+//             fprintf(stderr, "failed to listinit(list_topic:%s), ret:%d\n", list_topic.c_str(), ret);
+//             return -1;
+//         }
+// 
+//         ret = slist.is_available(error);
+//         if (ret < 0)
+//         {
+//             fprintf(stderr, "failed to is_available(list_topic:%s), ret:%d\n", list_topic.c_str(), ret);
+//             return -2;
+//         }
+// 
+//         std::map<std::string, std::string> kvmap;
+//         kvmap["name"] = "peter";
+//         ret = m_pRedisClient->hmset("yei001", kvmap, error);
+//         printf("hmset, ret:%d, error:%s\n", ret, error.c_str());
+// 
+// 
+//         char key[10] = { 0 };
+//         key[0] = 0;
+//         for (int i = 0; i < 1000; i++) {
+//             std::vector<std::string> values;
+//             values.push_back(std::to_string(i));
+//             ret = m_pRedisClient->rpush("yei001", values, error);
+//             if (error == "Success") {
+//                 assert(0 && "Success");
+//                 printf("******rpush empty key, ret:%d, error:%s\n", ret, error.c_str());
+//             }
+//             printf("rpush empty key, ret:%d, error:%s\n", ret, error.c_str());
+//         }
+// 
+// 
+//         return 0;
+// 
+//         /*
+//         {
+//             char szbuf[64] = { 0 };
+//             szbuf[1] = '1';
+//             szbuf[3] = '3';
+//             szbuf[4] = 4;
+//             szbuf[63] = 63;
+//             std::string buf(szbuf, 64);
+//             slist.listrpush(buf, nullptr, error);
+// 
+//             std::string popbuf;
+//             slist.listlpop(popbuf, nullptr, error);
+// 
+//             if (buf != popbuf) {
+//                 fprintf(stderr, "\n\npush buf(size:%ld) is NOT equal to pop buf(size:%ld)\n", buf.size(), popbuf.size());
+//             }
+//             else {
+//                 printf("\n\npush buf(size:%ld) is equal to pop buf(size:%ld)\n", buf.size(), popbuf.size());
+//             }
+//         }
+//         */
+//     }
+// 
+//     std::vector<std::shared_ptr<std::thread>> thrs;
+// 
+//     for (int index = 0; index < pushthreadnum; index++)
+//     {
+//             std::shared_ptr<std::thread> p(new std::thread([&]() {
+//             std::this_thread::sleep_for(std::chrono::seconds(1));
+// 
+//             std::ostringstream os;
+//             os << std::this_thread::get_id();
+//             printf("thread id:%s\n", os.str().c_str());
+// 
+//             uint64_t i;
+//             std::string error;
+//             int ret = 0;
+//             while ((i = nallPushQ.fetch_add(1)) < pushtotalnum)
+//             {
+//                 int64_t nowtm = time(NULL);
+//                 std::string value = list_topic + std::to_string(i);   
+//                 std::vector<std::string> values = { value };
+//                 uint32_t slotindex;
+//                 //std::this_thread::sleep_for(std::chrono::milliseconds(10000));
+//                 //printf("enter listrpush:%ld\n", time(NULL));
+//                 ret = slist.listrpush(values, &slotindex, error);
+//                 //printf("leave listrpush:%ld\n", time(NULL));
+//                 if (ret < 0) {
+//                     fprintf(stderr, "failed to listrpush(key:%s, tm:%ld), error:%s\n", value.c_str(), nowtm, error.c_str());
+//                     nallPopQFailedcnt++;
+//                 }
+//                 //printf("listrpush slotindex:%d\n", slotindex);
+//             }
+//             thrActiveNum--;
+//             fprintf(stdout, "push shared thread exited!\n");
+//         }));
+//         thrs.push_back(p);
+//     }
+// 
+//     for (int index = 0; index < popthreadnum; index++)
+//     {
+//         std::shared_ptr<std::thread> p(new std::thread([&]() {
+//             std::this_thread::sleep_for(std::chrono::seconds(1));
+// 
+//             std::ostringstream os;
+//             os << std::this_thread::get_id();
+//             printf("thread id:%s\n", os.str().c_str());
+// 
+//             uint64_t i;
+//             std::string error;
+//             int ret = 0;
+//             //int curIndex = 0;
+//             while ((i = nallPopCnt.fetch_add(1)) < poptotalnum)
+//             {
+//                 int64_t nowtm = time(NULL);
+//                 std::string buf;
+//                 uint32_t slotindex;
+//                 ret = slist.listlpop(buf, &slotindex, error);
+//                 std::vector<std::string> values;
+//                 if (0 == ret) { //空,无数据
+//                     //fprintf(stderr, "list_rdrobin_range is Empty(key:%s, i:%ld, tm:%ld)\n", list_topic.c_str(), i, nowtm);
+//                 }
+//                 else if (ret < 0) { //出错了
+//                     fprintf(stderr, "failed to list_rdrobin_range(key:%s, i:%ld, tm:%ld), error:%s\n", list_topic.c_str(), i, nowtm, error.c_str());
+//                     nallPopQFailedcnt++;
+//                 }
+//                 else {
+//                     assert(!buf.empty());
+//                     if (!buf.empty()) {
+//                         nallRealPopCnt.fetch_add(1);
+//                     }
+//                 }
+//                 //printf("listrpop slotindex:%d, buf:%s\n", slotindex, buf.c_str());
+//             }
+//             thrActiveNum--;
+//             fprintf(stdout, "pop shared thread exited!\n");
+//         }));
+//         thrs.push_back(p);
+//     }
+// 
+//     std::atomic<uint64_t> last_nallPushQ;
+//     last_nallPushQ.store(0);
+// 
+//     std::atomic<uint64_t> last_nallPopCnt;
+//     last_nallPopCnt.store(0);
+// 
+// 
+//     std::atomic<uint64_t> last_nallRealPopCnt;
+//     last_nallRealPopCnt.store(0);
+// 
+// 	std::string err;
+//     while (thrActiveNum != 0) {
+// 		printf("shard list(%s) all_size:%d, push speed:%lu/s, total push error num:%lu, pop speed:%lu/s, total real pop number:%lu, total pop error num:%lu\n",
+// 			list_topic.c_str(),
+// 			slist.list_totallen(err),
+//             nallPushQ - last_nallPushQ,
+//             nallPushQFailedcnt - 0,
+//             nallPopCnt - last_nallPopCnt,
+//             nallRealPopCnt - 0,
+//             nallPopQFailedcnt - 0
+//             );
+//         last_nallPushQ.store(nallPushQ);
+//         last_nallPopCnt.store(nallPopCnt);
+//         last_nallRealPopCnt.store(nallRealPopCnt);
+//         std::this_thread::sleep_for(std::chrono::seconds(1));
+//     }
+// 
+//     //等待线程平滑退出
+//     for (size_t i = 0; i < thrs.size(); i++) {
+//         if (thrs[i]->joinable())
+//             thrs[i]->join();
+//     }
+// 
+//     return 0;
+// }

@@ -40,7 +40,8 @@ public:
         int  nRetrySleep,
         int  nPoolSize,
         bool bPreset,
-        bool bStdoutOpen);
+        bool bStdoutOpen, 
+        std::string& error);
 
     // 销毁redis组件
     virtual void unintRedis();
@@ -236,12 +237,22 @@ public:
     virtual int llen(const std::string& key, std::string& error);
 
 
+private:
+    inline std::tuple<int, std::shared_ptr<MWRedisSliceList>> 
+        get_slicelist(const std::string& topic, const int slicenum, std::string& error);
 public:
-    virtual int slicelist_init(const std::string& topic, const int slicenum, std::string& error);
     virtual int slicelist_rpush(const std::string& topic, const int slicenum, const std::string& buf, uint32_t* slotindex, std::string& error);
     virtual int slicelist_lpop(const std::string& topic, const int slicenum, std::string& buf, uint32_t* slotindex, std::string& error);
+    virtual int slicelist_batchlpop(const std::string& topic, const int slicenum, int batchsize, std::vector<std::string>& buflist, uint32_t* slotindex, std::string& error);
     virtual int slicelist_totallen(const std::string& topic, const int slicenum, std::string& error);
-
+    virtual int slicelist_len(const std::string& topic, const int slicenum, const uint32_t& slotindex, std::string& error);
+    virtual int slicelist_lrange(
+        const std::string& topic,
+        const int slicenum,
+        const uint32_t& start,
+        const uint32_t& end,
+        std::vector<std::string>& result,
+        std::string& error);
 public:
     //////////////////////////////////////////////////////////////////////////
     //sets
@@ -266,6 +277,8 @@ public:
     *  happened or it isn't a set stored by the key.
     */
     virtual int sadd(const std::string& key, const std::vector<std::string>& members, std::string& error);
+    
+    int spop(const std::string& key, std::string& member, std::string& error);
 
 
     /**
@@ -368,6 +381,8 @@ public:
     *     the number of elements added
     */
     virtual int zadd(const std::string& key, const std::string& item, double score, std::string& error);
+    virtual int zadd(const std::string& key, const std::map<std::string, double>& items, std::string& error);
+
 
     /**
     * 从有序集中删除某个成员
@@ -377,6 +392,8 @@ public:
     *  0 表示该有序集不存在或成员不存在，> 0 表示成功删除的成员数量
     */
     virtual int zrem(const char* key, const std::vector<std::string>& members, std::string& error);
+    virtual int zremrangebyscore(const char* key, const char* min, const char* max, std::string& error);
+
 
     /**
     * 获得相应键的有序集的成员数量
@@ -430,16 +447,22 @@ public:
         std::vector<std::pair<std::string, double> >& out, std::string& error);
 
 
-    virtual int zrangebyscore_with_scores(const char* key, char* min, char* max,
+    virtual int zrangebyscore_with_scores(const char* key, const char* min, const char* max,
         std::vector<std::pair<std::string, double> >& out, std::string& error);
+
+
+    virtual int zscore(const char* key, const char* member, size_t len,
+        double& result, std::string& error);
 
 public:
     /************************************************************************
-    *  功能:set
+    *  功能:set/setex
     *  参数:key：key value:value error:错误描述
+    *  timeout:过期值，单位为秒
     *  @return true:成功; false:失败
     ************************************************************************/
     virtual bool set(const std::string& key, const std::string& value, std::string& error);
+    virtual bool setex(const std::string& key, const std::string& value, const int& timeout, std::string& error);
 
     /************************************************************************
     *  功能:get
@@ -545,7 +568,7 @@ public:
 
 public:
     /************************************************************************
-    *  功能:批量排序队列入栈
+    *  功能:zset入栈
     *  参数:@key:队列的名称
     *       @item:新增加项
     *       @score:分值
@@ -564,7 +587,7 @@ public:
 
 
     /************************************************************************
-    *  功能:批量排序队列出栈
+    *  功能:zset批量排序队列出栈
     *  参数:@key:队列的名称
     *  范围:[@minpos, @maxpos],[-inf, +inf]表示无穷小(无限制),无穷大(无限制)
     *  @batchsize:一次性获取的最大个数,填1~1000
@@ -578,6 +601,9 @@ public:
         const int& batchsize,
         std::vector<std::string>& outlist,
         std::string& error);
+
+public:
+    virtual int zlpop_list(const std::string& key, const int& batchsize, std::vector<std::string>& outlist, std::string& error);
 
 public:
     /************************************************************************
@@ -603,12 +629,12 @@ private:
     std::shared_ptr<acl::redis_client_cluster> m_cluster = nullptr;
     std::string m_strRedisCluster = "";   // redis集群地址，多地址之间用英文逗号隔开。如:192.169.1.22:6379,192.169.1.23:6380
     std::string m_strRedisPwd = "";  // redis访问密码，默认为空
-    int m_nConnTimeout = 30;         // 连接超时时间，默认为30秒,最大值60
-    int m_nRWTimeout = 30;           // 读写超时时间，默认为30秒,最大值60
-    int m_nRetryLimit = 15;          // 设置重定向的最大阀值，若重定向次数超过此阀值则报错,最大值30
+    int m_nConnTimeout = 3;          // 连接超时时间，默认为3秒,最大值60
+    int m_nRWTimeout = 3;            // 读写超时时间，默认为3秒,最大值60
+    int m_nRetryLimit = 3;           // 设置重定向的最大阀值，若重定向次数超过此阀值则报错,最大值30
     int m_nRetryInterval = 1;        // 当某个连接池结点出问题，设置探测该连接结点是否恢复的时间间隔(秒)，当该值为 0 时，则不检测
     int m_nRetrySleep = 500;         // 当重定向次数 >= 2 时每次再重定向此函数设置休息的时间(毫秒)，默认为500毫秒
-    int m_nPoolSize = 4;             // 最大线程数，默认为4
+    int m_nPoolSize = 8;             // 最大线程数，默认为8
     bool m_preset = true;            // 是否需要将所有哈希槽的对应关系提前设置好，这样可以去掉运行时动态添加哈希槽的过程，从而可以提高运行时的效率
 private:
     bool m_bInited = false;

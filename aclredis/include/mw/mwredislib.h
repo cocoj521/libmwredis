@@ -44,7 +44,8 @@ public:
         int  nRetrySleep,
         int  nPoolSize,
         bool bPreset,
-        bool bStdoutOpen) = 0;
+        bool bStdoutOpen, 
+        std::string& error) = 0;
 
     // 销毁redis组件
     virtual void unintRedis() = 0;
@@ -267,6 +268,16 @@ public:
     */
     virtual int slicelist_lpop(const std::string& topic, const int slicenum, std::string& buf, uint32_t* slotindex, std::string& error) = 0;
 
+    /*轮循从有数据的分片list列表对象中移除并返回头部元素-如果为空，尝试取下一个，最多重试N次
+    **当topic不存在时，将自动初始化后消费
+    **batchsize:一次性获取的最大个数,填1~1000
+    **slotindex:返回弹出数据的分片索引,允许填null
+    **@return
+    ** 0:成功
+    ** <0:表示出错，或该对象非列表对象，或该对象已经为空
+    */
+    virtual int slicelist_batchlpop(const std::string& topic, const int slicenum, int batchsize, std::vector<std::string>& buflist, uint32_t* slotindex, std::string& error) = 0;
+
 
     /*获取分片list列表对象的元素总个数
     **当topic不存在时，将自动初始化后插入
@@ -276,6 +287,17 @@ public:
     */
     virtual int slicelist_totallen(const std::string& topic, const int slicenum, std::string& error) = 0;
 
+    //获取指定分片的元素个数，索引从0开始，区间：[0, slicenum)
+    virtual int slicelist_len(const std::string& topic, const int slicenum, const uint32_t& slotindex, std::string& error) = 0;
+
+    //依次查找[0, slicenum)分区,直到该区间[start, end]内有数据返回
+    virtual int slicelist_lrange(
+        const std::string& topic,
+        const int slicenum,
+        const uint32_t& start,
+        const uint32_t& end,
+        std::vector<std::string>& result,
+        std::string& error) = 0;
 public:
     //////////////////////////////////////////////////////////////////////////
     //sets
@@ -300,30 +322,18 @@ public:
     *  happened or it isn't a set stored by the key.
     */
     virtual int sadd(const std::string& key, const std::vector<std::string>& members, std::string& error) = 0;
-
-
+    
     /**
-    * 从 key 的有序集中获得指定位置区间的成员名列表，成员按分值递增方式排序
-    * get the specified range memebers of a sorted set sotred at key
-    * @param key {const char*} 有序集键值
-    *  the key of a sorted set
-    * @param start {int} 起始下标位置
-    *  the begin index of the sorted set
-    * @param stop {int} 结束下标位置（结果集同时含该位置）
-    *  the end index of the sorted set
-    * @param result {std::vector<string>*} 非空时存储结果集，内部先调用
-    *  result.clear() 清除其中的元素
-    *  if not NULL, it will store the memebers result
-    * @return {int} 结果集中成员的数量
-    *  the number of memebers
-    *  0: 表示结果集为空或 key 不存在
-    *     the result is empty or the key doesn't exist
-    * <0: 表示出错或 key 对象非有序集对象
-    *     error or it's not a sorted set by the key
-    * >0: 结果集的数量
-    **/
-    virtual int zrange(const std::string& key, int start, int stop,
-        std::vector<std::string>& result, std::string& error) = 0;
+    * 从集合对象中随机移除并返回某个成员
+    * remove and get one member from the set
+    * @param key {const char*} 集合对象的键
+    *  the key of the set
+    * @param buf {string&} 存储被移除的成员
+    *  store the member removed from the set
+    * @return 失败 -1
+      成功:0
+    */
+    virtual int spop(const std::string& key, std::string& member, std::string& error) = 0;
 
     /*
     * 返回集合 key 中的所有成员
@@ -401,6 +411,7 @@ public:
     *     the number of elements added
     */
     virtual int zadd(const std::string& key, const std::string& item, double score, std::string& error) = 0;
+    virtual int zadd(const std::string& key, const std::map<std::string, double>& items, std::string& error) = 0;
 
     /**
     * 从有序集中删除某个成员
@@ -410,6 +421,7 @@ public:
     *  0 表示该有序集不存在或成员不存在，> 0 表示成功删除的成员数量
     */
     virtual int zrem(const char* key, const std::vector<std::string>& members, std::string& error) = 0;
+    virtual int zremrangebyscore(const char* key, const char* min, const char* max, std::string& error) = 0;
 
     /**
     * 获得相应键的有序集的成员数量
@@ -448,6 +460,29 @@ public:
 
 
     /**
+    * 从 key 的有序集中获得指定位置区间的成员名列表，成员按分值递增方式排序
+    * get the specified range memebers of a sorted set sotred at key
+    * @param key {const char*} 有序集键值
+    *  the key of a sorted set
+    * @param start {int} 起始下标位置
+    *  the begin index of the sorted set
+    * @param stop {int} 结束下标位置（结果集同时含该位置）
+    *  the end index of the sorted set
+    * @param result {std::vector<string>*} 非空时存储结果集，内部先调用
+    *  result.clear() 清除其中的元素
+    *  if not NULL, it will store the memebers result
+    * @return {int} 结果集中成员的数量
+    *  the number of memebers
+    *  0: 表示结果集为空或 key 不存在
+    *     the result is empty or the key doesn't exist
+    * <0: 表示出错或 key 对象非有序集对象
+    *     error or it's not a sorted set by the key
+    * >0: 结果集的数量
+    **/
+    virtual int zrange(const std::string& key, int start, int stop,
+        std::vector<std::string>& result, std::string& error) = 0;
+
+    /**
     * 返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于 min 或 max )
     * 的成员。有序集成员按 score 值递增(从小到大)次序排列
     * @param key {const char*} 有序集键值
@@ -462,16 +497,30 @@ public:
     virtual int zrangebyscore_with_scores(const char* key, double min, double max,
         std::vector<std::pair<std::string, double> >& out, std::string& error) = 0;
 
-    virtual int zrangebyscore_with_scores(const char* key, char* min, char* max,
+    virtual int zrangebyscore_with_scores(const char* key, const char* min, const char* max,
         std::vector<std::pair<std::string, double> >& out, std::string& error) = 0;
+
+
+    /**
+    * 获得有序集 key 中，成员 member 的 score 值
+    * @param key {const char*} 有序集键值
+    * @param member {const char*} 成员名
+    * @param len {size_t} member 的长度
+    * @param result {double&} 存储分值结果
+    * @return 当不存在或出错时<0，成功返回 0
+    */
+    virtual int zscore(const char* key, const char* member, size_t len,
+        double& result, std::string& error) = 0;
 
 public:
     /************************************************************************
-    *  功能:set
+    *  功能:set/setex
     *  参数:key：key value:value error:错误描述
+    *  timeout:过期值，单位为秒
     *  @return true:成功; false:失败
     ************************************************************************/
     virtual bool set(const std::string& key, const std::string& value, std::string& error) = 0;
+    virtual bool setex(const std::string& key, const std::string& value, const int& timeout, std::string& error) = 0;
 
     /************************************************************************
     *  功能:get
@@ -609,6 +658,17 @@ public:
         const int& batchsize,
         std::vector<std::string>& outlist,
         std::string& error) = 0;
+
+
+public:
+    /************************************************************************
+    *  功能:批量从list队列出栈
+    *  参数:@key:队列的名称
+    *  @batchsize:一次性获取的最大个数,填1~1000
+    *  @outlist 返回的数据列表
+    *  @return 0:成功; <0:错误码
+    ************************************************************************/
+    virtual int zlpop_list(const std::string& key, const int& batchsize, std::vector<std::string>& outlist, std::string& error) = 0;
 
 public:
     

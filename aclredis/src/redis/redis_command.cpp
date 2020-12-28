@@ -336,7 +336,7 @@ redis_client* redis_command::redirect(redis_client_cluster* cluster,
 
 	int i = 0;
 
-	while (i++ < 5)
+	while (i++ < 1)
 	{
 		conn = (redis_client*) conns->peek();
 		if (conn != NULL)
@@ -367,7 +367,7 @@ redis_client* redis_command::peek_conn(redis_client_cluster* cluster, int slot)
 	redis_client* conn;
 	int i = 0;
 
-	while (i++ < 5)
+	while (i++ < 1)
 	{
 		if (slot < 0)
 			conns = (redis_client_pool*) cluster->peek();

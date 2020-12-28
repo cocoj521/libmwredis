@@ -84,6 +84,7 @@ if (${UNIX_OS})
 		"-Wuninitialized"
 		"-D_POSIX_PTHREAD_SEMANTICS"
 		"-DACL_PREPARE_COMPILE"
+        "-DACL_UNIX"
 		"-Wstrict-prototypes"
         "-Wno-unused-function"
         "-Wno-unused-variable"

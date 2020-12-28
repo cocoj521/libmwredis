@@ -44,21 +44,17 @@ add_definitions(
         "-std=c++11"
 		)
 
-if (CMAKE_BUILD_TYPE STREQUAL "")
-    set(CMAKE_BUILD_TYPE "DEBUG")
-else()
-    string(TOUPPER CMAKE_BUILD_TYPE CMAKE_BUILD_TYPE)
-endif()
-
 if (CMAKE_BUILD_TYPE STREQUAL "RELEASE")
-    add_definitions("-O3")
+    add_definitions("-O3 -DNDEBUG")
+    MESSAGE("build RELEASE")
 else()
     add_definitions("-g")
+    MESSAGE("build DEBUG")
 endif()
 
 
 LINK_DIRECTORIES(${LIB_PATH})
-ADD_EXECUTABLE(demo test.cpp demo.cpp)
+ADD_EXECUTABLE(demo test.cpp demo.cpp redistest.cpp) 
 TARGET_LINK_LIBRARIES(demo   
 					  dl 
                       aclredis  

@@ -22,17 +22,20 @@ int MWRedisRedisImpl::initRedis(const std::string& strRedisCluster,
     int nRetrySleep,
     int nPoolSize,
     bool bPreset,
-    bool bStdoutOpen)
+    bool bStdoutOpen,
+    std::string& error)
 {
     if (m_bInited)
     {
         // 已经初始化过了，返回失败
+        error = "it is already initialized";
         return -1;
     }
 
     //检验redis服务器地址
     if (strRedisCluster.empty())
     {
+        error = "invalid parameter";
         return -2;
     }
 
@@ -54,18 +57,9 @@ int MWRedisRedisImpl::initRedis(const std::string& strRedisCluster,
         m_nRetryLimit = nRetryLimit > 30 ? 30 : nRetryLimit;
     }
 
-    m_nRetryInterval = m_nRetryInterval;
+    m_nRetryInterval = nRetryInterval;
     m_nRetrySleep = nRetrySleep;
-
-    
-    /*
-    if (nPoolSize > 0)
-    {
-        m_nPoolSize = nPoolSize > 32 ? 32: nPoolSize;
-    }
-    */
     m_nPoolSize = nPoolSize;
-
     m_preset = bPreset;
 
     // 初始acl组件
@@ -75,6 +69,7 @@ int MWRedisRedisImpl::initRedis(const std::string& strRedisCluster,
     m_cluster = std::make_shared<acl::redis_client_cluster>();
     if (nullptr == m_cluster) 
     {
+        error = "failed to alloc memory";
         return -3;
     }
 
@@ -98,15 +93,7 @@ int MWRedisRedisImpl::initRedis(const std::string& strRedisCluster,
     {
         m_cluster->set_password("default", m_strRedisPwd.c_str());
     }
-
-    // 是否需要将所有哈希槽的对应关系提前设置好，这样可以去掉运行时动态添加
-    // 哈希槽的过程，从而可以提高运行时的效率
-    if (m_preset)
-    {
-        const std::vector<acl::string>& token = addrs.split2(",; \t");
-        m_cluster->set_all_slot(token[0], m_nPoolSize);
-    }
-
+    
     //检查有无连上redis服务器
     acl::redis redis;
     redis.set_cluster(m_cluster.get(), m_nPoolSize);
@@ -114,9 +101,18 @@ int MWRedisRedisImpl::initRedis(const std::string& strRedisCluster,
     if (false == ret)
     {
         //没连上redis服务器
+        error = redis.result_error();
         printf("failed to ping redis:%s\n", redis.result_error());
         m_cluster.reset();
         return -4;
+    }
+
+    // 是否需要将所有哈希槽的对应关系提前设置好，这样可以去掉运行时动态添加
+    // 哈希槽的过程，从而可以提高运行时的效率
+    if (m_preset)
+    {
+        const std::vector<acl::string>& token = addrs.split2(",; \t");
+        m_cluster->set_all_slot(token[0], m_nPoolSize);
     }
 
     m_bInited = true;
@@ -595,118 +591,111 @@ int MWRedisRedisImpl::llen(const std::string& key, std::string& error)
 }
 
 
-int MWRedisRedisImpl::slicelist_init(const std::string& topic, const int slicenum, std::string& error)
+std::tuple<int, std::shared_ptr<MWRedisSliceList>> 
+MWRedisRedisImpl::get_slicelist(const std::string& topic, const int slicenum, std::string& error)
 {
     if (topic.empty() || slicenum <= 0) {
         error = "invalid parameter";
-        return -1;
+        return std::make_pair(-1, nullptr);
     }
 
     auto pos = m_sliceTopicMap.find(topic);
-    if (pos != m_sliceTopicMap.end())
-    {
-        error = "topic is already initialized";
-        return 1;
+    if (pos != m_sliceTopicMap.end()) {
+        return std::make_pair(0, pos->second);
     }
 
     {
         std::lock_guard<std::mutex> guard(m_sliceMutex);
-        auto it = m_sliceTopicMap.insert(std::make_pair(topic, std::make_shared<MWRedisSliceList>(shared_from_this())));
-        pos = it.first;
-
-        assert(pos != m_sliceTopicMap.end());
-        if (pos == m_sliceTopicMap.end())
-        {
-            error = "failed to insert slice topic map";
-            return -2;
+        pos = m_sliceTopicMap.find(topic);
+        if (pos != m_sliceTopicMap.end()) {
+            return std::make_pair(0, pos->second);
         }
 
-        return pos->second->listinit(topic, slicenum, error);
+        auto p = std::make_shared<MWRedisSliceList>(shared_from_this());
+        if (nullptr == p) {
+            error = "failed to make_shared, not enough memory";
+            return std::make_pair(-2, nullptr);
+        }
+
+        int ret = p->listinit(topic, slicenum, error);
+        if (0 != ret) {
+            error = "listinit:" + error;
+            return std::make_pair(ret, nullptr);
+        }
+
+        m_sliceTopicMap[topic] = p;
+        return std::make_pair(0, p);
     }
 }
 
-
 int MWRedisRedisImpl::slicelist_rpush(const std::string& topic, const int slicenum, const std::string& buf, uint32_t* slotindex, std::string& error)
 {
-    if (topic.empty() || slicenum <= 0) {
-        error = "invalid parameter";
-        return -1;
+    auto i = get_slicelist(topic, slicenum, error);
+    int ret = std::get<0>(i);
+    if (0 != ret) {
+        return ret;
     }
-
-    auto pos = m_sliceTopicMap.find(topic);
-    if (pos == m_sliceTopicMap.end())
-    {
-        std::lock_guard<std::mutex> guard(m_sliceMutex);
-        auto it = m_sliceTopicMap.insert(std::make_pair(topic, std::make_shared<MWRedisSliceList>(shared_from_this())));
-        pos = it.first;
-        if (true == it.second)
-        {
-            int ret = pos->second->listinit(topic, slicenum, error);
-            assert(0 == ret);
-            if (0 != ret) {
-                error = "listinit:" + error;
-                return ret;
-            }
-        }
-    }
-    return pos->second->listrpush(buf, slotindex, error);
+    return std::get<1>(i)->listrpush(buf, slotindex, error);
 }
 
 int MWRedisRedisImpl::slicelist_lpop(const std::string& topic, const int slicenum, std::string& buf, uint32_t* slotindex, std::string& error)
 {
-    if (topic.empty() || slicenum <= 0) {
-        error = "invalid parameter";
-        return -1;
+    auto i = get_slicelist(topic, slicenum, error);
+    int ret = std::get<0>(i);
+    if (0 != ret) {
+        return ret;
     }
-
-    auto pos = m_sliceTopicMap.find(topic);
-    if (pos == m_sliceTopicMap.end())
-    {
-        std::lock_guard<std::mutex> guard(m_sliceMutex);
-        auto it = m_sliceTopicMap.insert(std::make_pair(topic, std::make_shared<MWRedisSliceList>(shared_from_this())));
-        pos = it.first;
-        if (true == it.second)
-        {
-            int ret = pos->second->listinit(topic, slicenum, error);
-            assert(0 == ret);
-            if (0 != ret) {
-                error = "listinit:" + error;
-                return ret;
-            }
-        }
-    }
-
-    return pos->second->listlpop(buf, slotindex, error);
+    return std::get<1>(i)->listlpop(buf, slotindex, error);
 }
+
+
+int MWRedisRedisImpl::slicelist_batchlpop(const std::string& topic, const int slicenum, int batchsize, std::vector<std::string>& buflist, uint32_t* slotindex, std::string& error)
+{
+    auto i = get_slicelist(topic, slicenum, error);
+    int ret = std::get<0>(i);
+    if (0 != ret) {
+        return ret;
+    }
+    return std::get<1>(i)->listbatchlpop(batchsize, buflist, slotindex, error);
+}
+
 
 int MWRedisRedisImpl::slicelist_totallen(const std::string& topic, const int slicenum, std::string& error)
 {
-    if (topic.empty() || slicenum <= 0) {
-        error = "invalid parameter";
-        return -1;
+    auto i = get_slicelist(topic, slicenum, error);
+    int ret = std::get<0>(i);
+    if (0 != ret) {
+        return ret;
     }
+    return std::get<1>(i)->list_totallen(error);
+}
 
-    auto pos = m_sliceTopicMap.find(topic);
-    if (pos == m_sliceTopicMap.end())
-    {
-        std::lock_guard<std::mutex> guard(m_sliceMutex);
-        auto it = m_sliceTopicMap.insert(std::make_pair(topic, std::make_shared<MWRedisSliceList>(shared_from_this())));
-        pos = it.first;
-        if (true == it.second)
-        {
-            int ret = pos->second->listinit(topic, slicenum, error);
-            assert(0 == ret);
-            if (0 != ret) {
-                error = "listinit:" + error;
-                return ret;
-            }
-        }
+int MWRedisRedisImpl::slicelist_len(const std::string& topic, const int slicenum, const uint32_t& slotindex, std::string& error)
+{
+    auto i = get_slicelist(topic, slicenum, error);
+    int ret = std::get<0>(i);
+    if (0 != ret) {
+        return ret;
     }
-
-    return pos->second->list_totallen(error);
+    return std::get<1>(i)->list_len(slotindex, error);
 }
 
 
+int MWRedisRedisImpl::slicelist_lrange(
+    const std::string& topic,
+    const int slicenum,
+    const uint32_t& start,
+    const uint32_t& end,
+    std::vector<std::string>& result,
+    std::string& error)
+{
+    auto i = get_slicelist(topic, slicenum, error);
+    int ret = std::get<0>(i);
+    if (0 != ret) {
+        return ret;
+    }
+    return std::get<1>(i)->list_lrange(start, end, result, error);
+}
 
 int MWRedisRedisImpl::sadd(const std::string& key, const std::vector<std::string>& members, std::string& error)
 {
@@ -734,8 +723,7 @@ int MWRedisRedisImpl::sadd(const std::string& key, const std::vector<std::string
 }
 
 
-int  MWRedisRedisImpl::zrange(const std::string& key, int start, int stop,
-    std::vector<std::string>& result, std::string& error)
+int MWRedisRedisImpl::spop(const std::string& key, std::string& member, std::string& error)
 {
     if (!m_bInited)
     {
@@ -745,20 +733,19 @@ int  MWRedisRedisImpl::zrange(const std::string& key, int start, int stop,
 
     acl::redis redis;
     redis.set_cluster(m_cluster.get(), m_nPoolSize);
-    std::vector<acl::string> res;
-    int ret = redis.zrange(key.c_str(), start, stop, &res);
-    if (ret < 0)
+
+    acl::string buf;
+    bool bret = redis.spop(key.c_str(), buf);
+    if (false == bret)
     {
         error = redis.result_error();
-        return ret;
+        return -1;
     }
 
-    for (auto pos = res.begin(); pos != res.end(); ++pos)
-    {
-        result.emplace_back(std::string(pos->c_str(), pos->size()));
-    }
-    return ret;
+    member = std::move(buf);
+    return 0;
 }
+
 
 
 int MWRedisRedisImpl::smembers(const std::string& key, std::vector<std::string>& result, std::string& error)
@@ -878,6 +865,35 @@ int MWRedisRedisImpl::zadd(const std::string& key, const std::string& item, doub
 }
 
 
+
+int MWRedisRedisImpl::zadd(const std::string& key, const std::map<std::string, double>& items, std::string& error)
+{
+    if (!m_bInited)
+    {
+        error = "redis is uninitialized";
+        return -1;
+    }
+
+    acl::redis redis;
+    redis.set_cluster(m_cluster.get(), m_nPoolSize);
+
+    std::map<acl::string, double> members;
+    for (auto item : items)
+    {
+        acl::string member(item.first.c_str(), item.first.size());
+        members.insert(std::make_pair(member, item.second));
+    }
+    
+    int ret = redis.zadd(key.c_str(), members);
+    if (ret < 0)
+    {
+        error = redis.result_error();
+    }
+    return ret;
+}
+
+
+
 int MWRedisRedisImpl::zrem(const char* key, const std::vector<std::string>& members, std::string& error)
 {
     if (!m_bInited)
@@ -895,6 +911,25 @@ int MWRedisRedisImpl::zrem(const char* key, const std::vector<std::string>& memb
     }
 
     int ret = redis.zrem(key, vMem);
+    if (ret < 0)
+    {
+        error = redis.result_error();
+    }
+    return ret;
+}
+
+
+int MWRedisRedisImpl::zremrangebyscore(const char* key, const char* min, const char* max, std::string& error)
+{
+    if (!m_bInited)
+    {
+        error = "redis is uninitialized";
+        return -1;
+    }
+
+    acl::redis redis;
+    redis.set_cluster(m_cluster.get(), m_nPoolSize);
+    int ret = redis.zremrangebyscore(key, min, max);
     if (ret < 0)
     {
         error = redis.result_error();
@@ -960,6 +995,31 @@ int MWRedisRedisImpl::zcount(const char* key, double min, double max, std::strin
     return ret;
 }
 
+int  MWRedisRedisImpl::zrange(const std::string& key, int start, int stop,
+    std::vector<std::string>& result, std::string& error)
+{
+    if (!m_bInited)
+    {
+        error = "redis is uninitialized";
+        return -1;
+    }
+
+    acl::redis redis;
+    redis.set_cluster(m_cluster.get(), m_nPoolSize);
+    std::vector<acl::string> res;
+    int ret = redis.zrange(key.c_str(), start, stop, &res);
+    if (ret < 0)
+    {
+        error = redis.result_error();
+        return ret;
+    }
+
+    for (auto pos = res.begin(); pos != res.end(); ++pos)
+    {
+        result.emplace_back(std::string(pos->c_str(), pos->size()));
+    }
+    return ret;
+}
 
 int MWRedisRedisImpl::zrangebyscore_with_scores(const char* key, double min, double max,
     std::vector<std::pair<std::string, double>>& out, std::string& error)
@@ -990,7 +1050,7 @@ int MWRedisRedisImpl::zrangebyscore_with_scores(const char* key, double min, dou
 }
 
 
-int MWRedisRedisImpl::zrangebyscore_with_scores(const char* key, char* min, char* max,
+int MWRedisRedisImpl::zrangebyscore_with_scores(const char* key, const char* min, const char* max,
     std::vector<std::pair<std::string, double> >& out, std::string& error)
 {
     if (!m_bInited)
@@ -1019,6 +1079,27 @@ int MWRedisRedisImpl::zrangebyscore_with_scores(const char* key, char* min, char
 }
 
 
+int MWRedisRedisImpl::zscore(const char* key, const char* member, size_t len,
+    double& result, std::string& error)
+{
+    if (!m_bInited)
+    {
+        error = "redis is uninitialized";
+        return -1;
+    }
+
+    acl::redis redis;
+    redis.set_cluster(m_cluster.get(), m_nPoolSize);
+
+    bool bret = redis.zscore(key, member, len, result);
+    if (false == bret)
+    {
+        error = redis.result_error();
+    }
+
+    return (true == bret? 0 : -2);
+}
+
 bool MWRedisRedisImpl::set(const std::string& key, const std::string& value, std::string& error)
 {
     if (!m_bInited)
@@ -1031,6 +1112,25 @@ bool MWRedisRedisImpl::set(const std::string& key, const std::string& value, std
     redis.set_cluster(m_cluster.get(), m_nPoolSize);
 
     bool ret = redis.set(key.c_str(), key.size(), value.c_str(), value.size());
+    if (false == ret)
+    {
+        error = redis.result_error();
+    }
+    return ret;
+}
+
+bool MWRedisRedisImpl::setex(const std::string& key, const std::string& value, const int& timeout, std::string& error)
+{
+    if (!m_bInited)
+    {
+        error = "redis is uninitialized";
+        return false;
+    }
+
+    acl::redis redis;
+    redis.set_cluster(m_cluster.get(), m_nPoolSize);
+
+    bool ret = redis.setex(key.c_str(), key.size(), value.c_str(), value.size(), timeout);
     if (false == ret)
     {
         error = redis.result_error();
@@ -1243,6 +1343,30 @@ int MWRedisRedisImpl::zpop_queue(const std::string& key,
     int ret = this->eval_strings(script.c_str(), keys, args, outlist, error);
     return ret;
 }
+
+
+int MWRedisRedisImpl::zlpop_list(const std::string& key, const int& batchsize, std::vector<std::string>& outlist, std::string& error)
+{
+    if (!m_bInited)
+    {
+        error = "redis is uninitialized";
+        return -1;
+    }
+
+    assert(batchsize > 0);
+    if (batchsize <= 0) {
+        error = "invalid parameter";
+        return -2;
+    }
+
+    std::string script = "local e = redis.call('LRANGE', KEYS[1], ARGV[1], ARGV[2]) for k, v in ipairs(e) do redis.call('LPOP', KEYS[1]) end return e";
+    std::vector<std::string> keys = { key };
+    std::vector<std::string> args = { "0", std::to_string(batchsize - 1) };
+    outlist.clear();
+    int ret = this->eval_strings(script.c_str(), keys, args, outlist, error);
+    return ret;
+}
+
 
 
 int MWRedisRedisImpl::eval_number(const char* script,

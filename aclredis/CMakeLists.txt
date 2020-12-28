@@ -73,6 +73,7 @@ if (${UNIX_OS})
 		"-DHAS_PGSQL_DLL"
 		"-DHAS_SQLITE_DLL"
 		"-DHAS_POLARSSL_DLL"
+        "-DACL_UNIX"
 		"-Wno-unused-parameter"
 		"-fexceptions"
         "-std=c++11"

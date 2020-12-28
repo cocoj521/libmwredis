@@ -61,7 +61,8 @@ public:
     ** >=0:所有分片list元素数量总和
     */
     int list_totallen(std::string& error);
-
+    //获取指定分片的元素个数，索引从0开始，区间：[0, slicenum)
+    int list_len(const uint32_t& slotindex, std::string& error);
 
 public:
     /*将一个或多个值元素插入到分片list列表的表尾
@@ -85,10 +86,27 @@ public:
     ** <0:表示出错，或该对象非列表对象，或该对象已经为空
     */
     int listlpop(std::string& buf, uint32_t* slotindex, std::string& error);
+    int listbatchlpop(int batchsize, std::vector<std::string>& buflist, uint32_t* slotindex, std::string& error);
     //轮循从分片list列表对象中移除并返回头部元素-重试0次
     int list_robin_lpop(std::string& buf, uint32_t* slotindex, std::string& error);
     //从指定索引分区移除并返回头部元素,slotindex索引从0开始,取值范围：[0,N)
     int list_lpop_by_index(const uint32_t& slotindex, std::string& buf, std::string& error);
+
+public:
+    //从指定索引分区返回元素(不删除), 闭区间[start_slotindex, end_slotindex]
+    int list_lrange_by_index(
+        const uint32_t& slotindex,
+        const uint32_t& start,
+        const uint32_t& end,
+        std::vector<std::string>& result,
+        std::string& error);
+    
+    //依次查找[0, slicenum)分区,直到该区间[start, end]内有数据返回
+    int list_lrange(
+        const uint32_t& start,
+        const uint32_t& end,
+        std::vector<std::string>& result,
+        std::string& error);
 
 private:
     std::atomic<uint64_t> m_last_push_index;

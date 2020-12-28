@@ -44,6 +44,7 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
     <Text Include="CMakeLists.txt" />
+    <Text Include="..\编译使用说明.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -80,6 +81,9 @@
       <Filter>源文件\mw</Filter>
     </ClInclude>
     <ClInclude Include="include\mw\mwredislib.h">
+      <Filter>源文件\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mw\mwredisslicelist.h">
       <Filter>源文件\mw</Filter>
     </ClInclude>
   </ItemGroup>
@@ -352,6 +356,9 @@
       <Filter>源文件\stdlib</Filter>
     </ClCompile>
     <ClCompile Include="include\mw\mwredisimpl.cpp">
+      <Filter>源文件\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="include\mw\mwredisslicelist.cpp">
       <Filter>源文件\mw</Filter>
     </ClCompile>
   </ItemGroup>

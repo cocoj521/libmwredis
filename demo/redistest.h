@@ -67,6 +67,8 @@ public:
     uint64_t poptotalnum);
 
 public:
+    int test_exception(std::string hgetall_key_name, int threadnum, uint64_t totalnum);
+public:
     int test_push_queue();
     int test_pop_queue();
     int test_insert_hashmap();

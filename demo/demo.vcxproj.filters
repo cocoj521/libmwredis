@@ -13,10 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\pb">
+      <UniqueIdentifier>{d72ce8cd-f04d-4f6f-975d-ce82c9f682c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
     <Text Include="CMakeLists.txt">
+      <Filter>源文件</Filter>
+    </Text>
+    <Text Include="rediscnt.txt">
       <Filter>源文件</Filter>
     </Text>
   </ItemGroup>
@@ -30,6 +36,30 @@
     <ClInclude Include="mredisdb.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="redistest.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="combizredisdb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="wbsredisdb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="batchbizredisdb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="watcher_redisdb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="proto\rmsmsg.pb.h">
+      <Filter>源文件\pb</Filter>
+    </ClInclude>
+    <ClInclude Include="3rd\include\google\protobuf\message.h">
+      <Filter>源文件\pb</Filter>
+    </ClInclude>
+    <ClInclude Include="rcs_biz_redisdb.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -41,14 +71,52 @@
     <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="testmdb.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="mredisdb.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="testmdb.cpp">
+    <ClCompile Include="redistest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="combizredisdb.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="wbsredisdb.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="batchbizredisdb.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="watcher_redisdb.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="proto\rmsmsg.pb.cc">
+      <Filter>源文件\pb</Filter>
+    </ClCompile>
+    <ClCompile Include="rcs_biz_redisdb.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <None Include="sms2rms.lua">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="proto\smstorms.proto">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="proto\fep-biz.proto">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="zsetcore.lua">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="cmdtable.lua">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="proto\rmsmsg.proto">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
